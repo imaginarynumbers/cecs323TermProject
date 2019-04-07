@@ -7,9 +7,7 @@ import java.sql.Statement;
 import java.util.Scanner;
 
 public class Driver {
-  private static String dbURL1 = "jdbc:mysql://192.168.56.101:3306/SoftwareCompany?useSSL=false&serverTimezone=UTC";
-  private static String userName="adminer";
-  private static String password="CECS323cecs";
+  private static String dbURL1 = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
   private static Connection conn1 = null;
   private static Statement stmnt = null;
   private static String tableName = "TermProjectDB";
