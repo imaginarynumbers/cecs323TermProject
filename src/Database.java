@@ -52,4 +52,13 @@ public class Database {
 		}
 		System.out.println("Closed!");
 	}
+	/*
+	<T extends IDatabaseObject> T getObjectFromQuery(String query) {
+		T res = null;
+		res = T.fromResult(this.state.executeQuery(query));
+		return res;
+	}
+	*/
 }
+
+
