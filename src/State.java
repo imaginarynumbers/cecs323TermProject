@@ -1,7 +1,7 @@
 import java.sql.SQLException;
 import java.util.Scanner;
 
-abstract class AState {
+abstract class State {
 	Controller controller;
 	MyScanner scan;
 	Database db;
@@ -11,6 +11,6 @@ abstract class AState {
 		this.scan = scan;
 		this.db = db;
 	}
-	abstract AState update() throws SQLException;
+	abstract State update() throws SQLException;
 }
 

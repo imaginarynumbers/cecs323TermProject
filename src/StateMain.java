@@ -1,10 +1,10 @@
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class StateMain extends AState {
+public class StateMain extends State {
 	
 	@Override
-	AState update() throws SQLException {
+	State update() throws SQLException {
 		String[] options = {
 				"List all projects",
 				"Quit"

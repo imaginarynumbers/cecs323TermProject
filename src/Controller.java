@@ -2,7 +2,7 @@ import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Controller {
-	AState state = null;
+	State state = null;
 	boolean running = false;
 	MyScanner scan;
 	Database db;
@@ -13,7 +13,7 @@ public class Controller {
 		changeState(new StateMain());
 	}
 	
-	private void changeState(AState state) {
+	private void changeState(State state) {
 		this.state = state;
 		this.state.setup(this, this.scan, this.db);
 	}
@@ -26,7 +26,7 @@ public class Controller {
 		this.running = true;
 		while (this.running) {
 			try {
-				AState rep = state.update();
+				State rep = state.update();
 				if (rep != null) {
 					// delete this.state?
 					this.changeState(rep);
