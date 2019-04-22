@@ -56,6 +56,14 @@ public class Database {
 		}
 		System.out.println("Closed!");
 	}
+	
+	void printProjects() throws SQLException {
+		ResultSet res = this.executeQuery("SELECT * FROM Project;");
+		while (res.next()) {
+			Project pro = new Project(res);
+			pro.print();
+		}
+	}
 	/*
 	<T extends IDatabaseObject> T getObjectFromQuery(String query) {
 		T res = null;
