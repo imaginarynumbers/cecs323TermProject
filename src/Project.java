@@ -18,7 +18,7 @@ public class Project implements IDatabaseObject {
 
 	@Override
 	public void print() {
-		System.out.println(this.projectId + '\t' + this.title + '\t' + this.description);
+		System.out.println(this.projectId + " \t" + this.title + "\t\"" + this.description + "\"");
 	}
 	
 }

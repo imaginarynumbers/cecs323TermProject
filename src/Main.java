@@ -1,6 +1,7 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
@@ -18,8 +19,11 @@ public class Main {
 		try {
 			db.connect(user, password);
 			db.executeQuery("USE cecs323sec7s12;");
-			//Project pro = new Project(db.executeQuery("SELECT * FROM Project"));
-			//pro.print();
+			ResultSet res = db.executeQuery("SELECT * FROM Project;");
+			while (res.next()) {
+				Project pro = new Project(res);
+				pro.print();
+			}
 			db.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
