@@ -9,6 +9,12 @@ public class Controller {
 	Controller(Database db) {
 		this.db = db;
 		this.scan = new MyScanner();
+		changeState(new StateMain());
+	}
+	
+	private void changeState(AState state) {
+		this.state = state;
+		this.state.setup(this, this.scan, this.db);
 	}
 	
 	void stop() {
@@ -21,8 +27,7 @@ public class Controller {
 			AState rep = state.update();
 			if (rep != null) {
 				// delete this.state?
-				this.state = rep;
-				this.state.setup(this, this.scan, this.db);
+				this.changeState(rep);
 			}
 		}
 	}

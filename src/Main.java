@@ -18,6 +18,9 @@ public class Main {
 		try {
 			db.connect(user, password);
 			db.executeQuery("USE cecs323sec7s12;");
+			
+			Controller con = new Controller(db);
+			con.start();
 			/*
 			ResultSet res = db.executeQuery("SELECT * FROM Project;");
 			while (res.next()) {
