@@ -39,6 +39,10 @@ public class Database {
 		}
 		this.state = this.con.createStatement();
 	}
+	
+	ResultSet executeQuery(String query) throws SQLException {
+		return this.state.executeQuery(query);
+	}
 
 	void close() throws SQLException {
 
