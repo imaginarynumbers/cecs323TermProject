@@ -18,11 +18,13 @@ public class Main {
 		try {
 			db.connect(user, password);
 			db.executeQuery("USE cecs323sec7s12;");
+			/*
 			ResultSet res = db.executeQuery("SELECT * FROM Project;");
 			while (res.next()) {
 				Project pro = new Project(res);
 				pro.print();
 			}
+			*/
 			db.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
