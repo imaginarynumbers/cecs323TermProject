@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Controller {
@@ -24,10 +25,15 @@ public class Controller {
 	void start() {
 		this.running = true;
 		while (this.running) {
-			AState rep = state.update();
-			if (rep != null) {
-				// delete this.state?
-				this.changeState(rep);
+			try {
+				AState rep = state.update();
+				if (rep != null) {
+					// delete this.state?
+					this.changeState(rep);
+				}
+			} catch (SQLException e) {
+				System.err.println("Unhandled SQL exception: ");
+				e.printStackTrace();
 			}
 		}
 	}

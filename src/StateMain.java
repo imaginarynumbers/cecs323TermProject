@@ -1,8 +1,10 @@
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class StateMain extends AState {
 	
 	@Override
-	AState update() {
+	AState update() throws SQLException {
 		String[] options = {
 				"List all projects",
 				"Quit"
@@ -10,7 +12,11 @@ public class StateMain extends AState {
 		int rep = this.scan.showOptions("Welcome", options);
 		switch (rep) {
 			case 1:
-				System.out.println("hue");
+				ResultSet res = this.db.executeQuery("SELECT * FROM Project;");
+				while (res.next()) {
+					Project pro = new Project(res);
+					pro.print();
+				}
 				break;
 			
 			default:

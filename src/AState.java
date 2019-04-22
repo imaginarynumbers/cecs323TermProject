@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.Scanner;
 
 abstract class AState {
@@ -10,6 +11,6 @@ abstract class AState {
 		this.scan = scan;
 		this.db = db;
 	}
-	abstract AState update();
+	abstract AState update() throws SQLException;
 }
 
