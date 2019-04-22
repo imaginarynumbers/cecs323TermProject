@@ -12,7 +12,6 @@ public class Main {
 		String db_url = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
 		Database db = new Database(db_url);
 		
-		String db_name = "cecs323sec7s12";
 		String user = "cecs323sec7s12";
 		String password = "Veiwai";
 		
