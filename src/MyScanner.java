@@ -21,6 +21,9 @@ public class MyScanner {
 		return res;
 	}
 	
+	
+	
+	
 	public String raw_input(String hint, String ifempty) {
 		System.out.print(hint);
 		String res = this.scan.nextLine();

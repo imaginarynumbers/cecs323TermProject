@@ -5,6 +5,21 @@ public class StateMain extends State {
 	
 	@Override
 	State update() throws SQLException {
+		final StateMain state = this;
+		NamedRunnable[] options = {
+				new NamedRunnable() {
+					@Override
+					public String name() {
+						return "List all projects";
+					}
+
+					@Override
+					public void run() throws SQLException {
+						state.db.printProjects();
+					}
+				}
+		};
+		/*
 		String[] options = {
 				"List all projects",
 				"Add project",
@@ -23,6 +38,7 @@ public class StateMain extends State {
 				this.controller.stop();
 				break;
 		}
+		*/
 		return null;
 	}
 
