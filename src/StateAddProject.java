@@ -1,9 +1,12 @@
 import java.sql.SQLException;
+import java.util.List;
 
 public class StateAddProject extends State {
 
 	@Override
 	State update() throws SQLException {
+		
+		this.scan.<Project>select(this.db.getProjects());
 		
 		String name = this.scan.raw_input("Project name: ");
 		String desc = this.scan.raw_input("Project description: ");

@@ -64,13 +64,18 @@ public class Database {
 			pro.print();
 		}
 	}
-	/*
-	<T extends IDatabaseObject> T getObjectFromQuery(String query) {
-		T res = null;
-		res = T.fromResult(this.state.executeQuery(query));
+	
+	List<Project> getProjects() throws SQLException {
+		String query = "SELECT * FROM Project;";
+		ResultSet result = this.state.executeQuery(query);
+		List<Project> res = new ArrayList<>();
+		
+		while (result.next()) {
+			res.add(new Project(result));
+		}
+		result.close();
 		return res;
 	}
-	*/
 }
 
 

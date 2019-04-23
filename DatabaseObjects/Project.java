@@ -39,5 +39,9 @@ public class Project implements IDatabaseObject {
 		else
 			System.err.println("Did not get generated key: " + query);
 	}
-	
+
+	@Override
+	public String getTitle() {
+		return this.title + " " + this.description;
+	}
 }

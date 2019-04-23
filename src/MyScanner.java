@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.Scanner;
 
 public class MyScanner {
@@ -43,6 +44,26 @@ public class MyScanner {
 		} catch (Exception e) {
 			System.out.println("Enter an integer!");
 			return this.input(hint);
+		}
+	}
+	
+	public <T extends IDatabaseObject> T select(List<T> objects) {
+		String[] options = new String[objects.size() + 1];
+		int x = 0;
+		if (objects.size() <= 0) {
+			System.out.println("No objects!");
+			return null;
+		}
+		for (T object : objects) {
+			options[x] = object.getTitle();
+			x += 1;
+		}
+		options[x] = "[CANCEL]";
+		int selected = this.showOptions("Select an object", options);
+		if (selected == objects.size() + 1) {
+			return null;
+		} else {
+			return objects.get(selected - 1);
 		}
 	}
 	
