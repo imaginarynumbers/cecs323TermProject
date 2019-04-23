@@ -1,6 +1,7 @@
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class Project implements IDatabaseObject {
 	int projectId;
@@ -26,13 +27,17 @@ public class Project implements IDatabaseObject {
 
 	@Override
 	public void insert(Database db) throws SQLException {
-		String query = "INSERT INTO Project (projectId, title, description)"
-				+ " VALUES (?, ?, ?, ?)";
-		PreparedStatement ps = db.con.prepareStatement(query);
-		ps.setInt(1, this.projectId);
-		ps.setString(2, this.title);
-		ps.setString(3, this.description);
+		String query = "INSERT INTO Project (title, description)"
+				+ " VALUES (?, ?)";
+		PreparedStatement ps = db.con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		ps.setString(1, this.title);
+		ps.setString(2, this.description);
 		ps.execute();
+		ResultSet keys = ps.getGeneratedKeys();
+		if (keys.next())
+			this.projectId = keys.getInt(1);
+		else
+			System.err.println("Did not get generated key: " + query);
 	}
 	
 }
