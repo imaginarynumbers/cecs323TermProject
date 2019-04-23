@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Main {
 
 	public static void main(String[] args) {
-		String db_url = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306?zeroDateTimeBehavior=CONVERT_TO_NULL&serverTimezone=UTC";
+		String db_url = "jdbc:mysql://cecs-db01.coe.csulb.edu:3306?zeroDateTimeBehavior=convertToNull&serverTimezone=UTC";
 		Database db = new Database(db_url);
 		
 		String user = "cecs323sec7s12";
