@@ -44,4 +44,12 @@ public class Project implements IDatabaseObject {
 	public String getTitle() {
 		return this.title + " " + this.description;
 	}
+	
+	@Override
+	public void delete(Database db) throws SQLException {
+		String query = "DELETE FROM Project WHERE projectId = ?;";
+        PreparedStatement ps = db.con.prepareStatement(query);
+        ps.setInt(1, this.projectId);
+        ps.execute();
+	}
 }

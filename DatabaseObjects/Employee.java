@@ -4,13 +4,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Employee implements IDatabaseObject {
-    int employeeID;
+    int employeeId;
     String fName;
     String lName;
     String jobTitle;
 
-    Employee(int employeeID, String fName, String lName, String jobTitle) {
-        this.employeeID = employeeID;
+    Employee(int employeeId, String fName, String lName, String jobTitle) {
+        this.employeeId = employeeId;
         this.fName = fName;
         this.lName = lName;
         this.jobTitle = jobTitle;
@@ -24,7 +24,7 @@ public class Employee implements IDatabaseObject {
 
     @Override
     public void print() {
-        System.out.println(this.employeeID + "\t" + this.fName + "\t" + this.lName + "\t" + this.jobTitle);
+        System.out.println(this.employeeId + "\t" + this.fName + "\t" + this.lName + "\t" + this.jobTitle);
     }
 
     @Override
@@ -43,9 +43,17 @@ public class Employee implements IDatabaseObject {
         ps.execute();
         ResultSet keys = ps.getGeneratedKeys();
         if (keys.next()) {
-            this.employeeID = keys.getInt(1);
+            this.employeeId = keys.getInt(1);
         } else {
             System.err.println("Did not get generated keys: " + query);
         }
     }
+
+	@Override
+	public void delete(Database db) throws SQLException {
+		String query = "DELETE FROM Employee WHERE employeeId = ?;";
+        PreparedStatement ps = db.con.prepareStatement(query);
+        ps.setInt(1, this.employeeId);
+        ps.execute();
+	}
 }

@@ -5,4 +5,5 @@ public interface IDatabaseObject {
 	void print();
 	String getTitle();
 	void insert(Database db) throws SQLException;
+	void delete(Database db) throws SQLException;
 }

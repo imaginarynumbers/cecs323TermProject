@@ -9,7 +9,7 @@ public class StateAccessProject extends State {
 	}
 	
 	void deleteProject() throws SQLException {
-		System.out.println("To be implemented...");
+		this.project.delete(this.db);
 	}
 	
 	@Override
