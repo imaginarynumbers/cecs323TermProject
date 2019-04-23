@@ -8,6 +8,7 @@ public class StateMain extends State {
 		String[] options = {
 				"List all projects",
 				"Add project",
+				"Add an employee",
 				"Access project",
 				"Quit"
 		};
@@ -21,6 +22,8 @@ public class StateMain extends State {
 				return new StateAddProject();
 			
 			case 3:
+				return new StateAddEmployee();
+			case 4:
 				Project selected = this.scan.<Project>select(this.db.getProjects());
 				if (selected != null)
 					selected.print();
