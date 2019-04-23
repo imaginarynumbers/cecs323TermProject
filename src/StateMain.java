@@ -8,6 +8,7 @@ public class StateMain extends State {
 		String[] options = {
 				"List all projects",
 				"Add project",
+				"Access project",
 				"Quit"
 		};
 		int rep = this.scan.showOptions("Welcome", options);
@@ -19,6 +20,11 @@ public class StateMain extends State {
 			case 2:
 				return new StateAddProject();
 			
+			case 3:
+				Project selected = this.scan.<Project>select(this.db.getProjects());
+				selected.print();
+				break;
+				
 			default:
 				this.controller.stop();
 				break;
