@@ -23,7 +23,7 @@ public class StateAccessProject extends State {
 		switch (rep) {
 			case 1:
 				String y = this.scan.raw_input("Are you sure you want to DELETE this project? (y/n) ");
-				if (y.toLowerCase() == "y") {
+				if (y.toLowerCase().equals("y")) {
 					this.deleteProject();
 					return new StateMain();
 				}
