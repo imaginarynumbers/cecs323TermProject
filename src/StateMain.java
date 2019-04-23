@@ -22,7 +22,8 @@ public class StateMain extends State {
 			
 			case 3:
 				Project selected = this.scan.<Project>select(this.db.getProjects());
-				selected.print();
+				if (selected != null)
+					selected.print();
 				break;
 				
 			default:
