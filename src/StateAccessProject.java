@@ -10,6 +10,7 @@ public class StateAccessProject extends State {
 	
 	void deleteProject() throws SQLException {
 		this.project.delete(this.db);
+		System.out.println("Deleted project " + this.project.title);
 	}
 	
 	@Override
