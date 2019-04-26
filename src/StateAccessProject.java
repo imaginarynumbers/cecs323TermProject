@@ -12,12 +12,21 @@ public class StateAccessProject extends State {
 		this.project.delete(this.db);
 		System.out.println("Deleted project " + this.project.title);
 	}
+
+	void insertSprint() throws SQLException {
+		String name = this.scan.raw_input("Sprint name: ");
+		String date = this.scan.raw_input("Beginning date of sprint (YYYY-MM-DD): ");
+		Sprint sprint = new Sprint(0, this.project.projectId, date, name);
+		sprint.insert(this.db);
+
+	}
 	
 	@Override
 	State update() throws SQLException {
 		// TODO Auto-generated method stub
 		String[] options = {
 				"Delete project",
+				"Add sprint associated with project",
 				"Return to main"
 		};
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
@@ -29,7 +38,11 @@ public class StateAccessProject extends State {
 					return new StateMain();
 				}
 				break;
-			
+
+			case 2:
+				insertSprint();
+				return new StateMain();
+
 			default:
 				return new StateMain();
 		}

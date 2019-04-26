@@ -11,7 +11,7 @@ public class StateMain extends State {
 				"Add an employee",
 				"List all employees",
 				"Access project",
-				"Add sprint",
+//				"Add sprint",
 				"Quit"
 		};
 		int rep = this.scan.showOptions("Welcome", options);
@@ -33,12 +33,12 @@ public class StateMain extends State {
 				if (selected != null)
 					return new StateAccessProject(selected);
 				break;
-			case 6:
-				System.out.println("Choose the project that is associated with the sprint: ");
-				Project sprintProj = this.scan.select(this.db.getProjects());
-				if (sprintProj != null)
-					return new StateAddSprint(sprintProj);
-				break;
+//			case 6:
+//				System.out.println("Choose the project that is associated with the sprint: ");
+//				Project sprintProj = this.scan.select(this.db.getProjects());
+//				if (sprintProj != null)
+//					return new StateAddSprint(sprintProj);
+//				break;
 				
 			default:
 				this.controller.stop();
