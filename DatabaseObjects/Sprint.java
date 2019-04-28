@@ -49,6 +49,9 @@ public class Sprint implements IDatabaseObject{
 
     @Override
     public void delete(Database db) throws SQLException {
-
+        String query = "DELETE FROM Sprint where sprintID = (?)";
+        PreparedStatement ps = db.con.prepareStatement(query);
+        ps.setInt(1, this.sprintID);
+        ps.execute();
     }
 }
