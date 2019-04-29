@@ -77,7 +77,7 @@ public class Database {
 	}
 
 	void printUserStories(int projectId) throws SQLException {
-		System.out.println("UserStoryID \t ProjectID \t User \t Goal \t Priority \t Date");
+		System.out.println("UserStoryID \t ProjectID \t As \t I want to \t Priority \t creation date");
 		this.<UserStory>printObjects(this.getUserStories(projectId));
 	}
 

@@ -24,12 +24,12 @@ public class StateAccessProject extends State {
 	}
 
 	void insertUserStory() throws SQLException {
-		String as = this.scan.raw_input("Role: ");
-		String wantTo = this.scan.raw_input("Goal: ");
-		String because = this.scan.raw_input("Reason: ");
+		String as = this.scan.raw_input("As: ");
+		String wantTo = this.scan.raw_input("I want to : ");
+		String because = this.scan.raw_input("Because: ");
 		int priority = Integer.parseInt(this.scan.raw_input("Priority (int): "));
-		String status = this.scan.raw_input("Status: ");
-		String date = this.scan.raw_input("Creation date of story (YYYY-MM-DD): ");
+		String status = this.scan.raw_input("Status: "); // Should be an enum here
+		String date = this.scan.raw_input("Creation date of story (YYYY-MM-DD): "); // should be current date
 		UserStory us = new UserStory(0, as, wantTo, because, priority, status, date, this.project.projectId);
 		us.insert(this.db);
 	}
