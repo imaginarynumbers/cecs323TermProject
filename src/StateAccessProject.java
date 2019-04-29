@@ -34,18 +34,6 @@ public class StateAccessProject extends State {
 		us.insert(this.db);
 	}
 
-	void printSprints() throws SQLException {
-		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
-		PreparedStatement ps = db.con.prepareStatement(query);
-		ps.setInt(1, this.project.projectId);
-		ResultSet res = ps.executeQuery();
-		System.out.println("SprintID \t ProjectID \t Date \t sprintName");
-		while (res.next()) {
-			Sprint sprint = new Sprint(res);
-			sprint.print();
-		}
-	}
-
 	void printUserStory() throws SQLException {
 		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
 		PreparedStatement ps = db.con.prepareStatement(query);
@@ -81,7 +69,7 @@ public class StateAccessProject extends State {
 			break;
 
 		case 4:
-			this.printSprints();
+			this.db.printSprints(this.project.projectId);
 			break;
 
 		case 5:

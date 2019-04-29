@@ -71,6 +71,11 @@ public class Database {
 		this.<Employee>printObjects(this.getEmployees());
 	}
 
+	void printSprints(int projectId) throws SQLException {
+		System.out.println("SprintID \t ProjectID \t Date \t sprintName");
+		this.<Sprint>printObjects(this.getSprints(projectId));
+	}
+
 	List<Employee> getEmployees() throws SQLException {
 		String query = "SELECT * FROM Employee";
 		ResultSet result = this.state.executeQuery(query);
@@ -93,5 +98,19 @@ public class Database {
 		}
 		result.close();
 		return res;
+	}
+
+	List<Sprint> getSprints(int projectId) throws SQLException {
+		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
+		PreparedStatement ps = this.con.prepareStatement(query);
+		ps.setInt(1, projectId);
+		ResultSet res = ps.executeQuery();
+		List<Sprint> result = new ArrayList<>();
+
+		while (res.next()) {
+			result.add(new Sprint(res));
+		}
+		res.close();
+		return result;
 	}
 }
