@@ -5,11 +5,11 @@ import java.sql.SQLException;
 public class StateAccessProject extends State {
 
 	Project project;
-	
+
 	StateAccessProject(Project project) {
 		this.project = project;
 	}
-	
+
 	void deleteProject() throws SQLException {
 		this.project.delete(this.db);
 		System.out.println("Deleted project " + this.project.title);
@@ -57,46 +57,39 @@ public class StateAccessProject extends State {
 			us.print();
 		}
 	}
-	
+
 	@Override
 	State update() throws SQLException {
-		// TODO Auto-generated method stub
-		String[] options = {
-				"Delete project",
-				"Add Sprint associated with project",
-				"Add UserStory for project",
-				"View Sprints",
-				"View UserStories",
-				"Return to main"
-		};
+		String[] options = { "Delete project", "Add Sprint associated with project", "Add UserStory for project",
+				"View Sprints", "View UserStories", "Return to main" };
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
 		switch (rep) {
-			case 1:
-				String y = this.scan.raw_input("Are you sure you want to DELETE this project? (y/n) ");
-				if (y.toLowerCase().equals("y")) {
-					this.deleteProject();
-					return new StateMain();
-				}
-				break;
-
-			case 2:
-				insertSprint();
+		case 1:
+			String y = this.scan.raw_input("Are you sure you want to DELETE this project? (y/n) ");
+			if (y.toLowerCase().equals("y")) {
+				this.deleteProject();
 				return new StateMain();
+			}
+			break;
 
-			case 3:
-				insertUserStory();;
-				return new StateMain();
+		case 2:
+			this.insertSprint();
+			break;
 
-			case 4:
-				printSprints();
-				return new StateMain();
+		case 3:
+			this.insertUserStory();
+			break;
 
-			case 5:
-				printUserStory();
-				return new StateMain();
+		case 4:
+			this.printSprints();
+			break;
 
-			default:
-				return new StateMain();
+		case 5:
+			this.printUserStory();
+			break;
+
+		default:
+			return new StateMain();
 		}
 		return null;
 	}

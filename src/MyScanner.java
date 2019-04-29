@@ -4,11 +4,11 @@ import java.util.Scanner;
 public class MyScanner {
 
 	private Scanner scan;
-	
+
 	MyScanner() {
 		this.scan = new Scanner(System.in);
 	}
-	
+
 	public int showOptions(String title, String[] options) {
 		System.out.println("--- " + title + " ---");
 		for (int x = 0; x < options.length; x += 1) {
@@ -21,7 +21,7 @@ public class MyScanner {
 		}
 		return res;
 	}
-	
+
 	public String raw_input(String hint, String ifempty) {
 		System.out.print(hint);
 		String res = this.scan.nextLine();
@@ -30,11 +30,11 @@ public class MyScanner {
 		}
 		return res;
 	}
-	
+
 	public String raw_input(String hint) {
 		return this.raw_input(hint, "");
 	}
-	
+
 	public int input(String hint) {
 		System.out.print(hint);
 		String line;
@@ -46,7 +46,7 @@ public class MyScanner {
 			return this.input(hint);
 		}
 	}
-	
+
 	public <T extends IDatabaseObject> T select(List<T> objects) {
 		String[] options = new String[objects.size() + 1];
 		int x = 0;
@@ -66,5 +66,5 @@ public class MyScanner {
 			return objects.get(selected - 1);
 		}
 	}
-	
+
 }

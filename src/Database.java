@@ -57,23 +57,31 @@ public class Database {
 		System.out.println("Closed!");
 	}
 
-	void printProjects() throws SQLException {
-		ResultSet res = this.executeQuery("SELECT * FROM Project;");
-		while (res.next()) {
-			Project pro = new Project(res);
-			pro.print();
+	public <T extends IDatabaseObject> void printObjects(List<T> objects) {
+		for (T object : objects) {
+			object.print();
 		}
 	}
 
-	void printEmployees() throws SQLException {
-		ResultSet res = this.executeQuery("SELECT * FROM Employee");
-		System.out.println("First Name\tLast Name\tJob Title");
-		while (res.next()) {
-			Employee emp = new Employee(res);
-			emp.print();
-		}
+	void printProjects() throws SQLException {
+		this.<Project>printObjects(this.getProjects());
 	}
-	
+
+	void printEmployees() throws SQLException {
+		this.<Employee>printObjects(this.getEmployees());
+	}
+
+	List<Employee> getEmployees() throws SQLException {
+		String query = "SELECT * FROM Employee";
+		ResultSet result = this.state.executeQuery(query);
+		List<Employee> res = new ArrayList<>();
+
+		while (result.next()) {
+			res.add(new Employee(result));
+		}
+		result.close();
+		return res;
+	}
 
 	List<Project> getProjects() throws SQLException {
 		String query = "SELECT * FROM Project;";
