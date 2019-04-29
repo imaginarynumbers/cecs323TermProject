@@ -34,18 +34,6 @@ public class StateAccessProject extends State {
 		us.insert(this.db);
 	}
 
-	void printUserStory() throws SQLException {
-		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
-		PreparedStatement ps = db.con.prepareStatement(query);
-		ps.setInt(1, this.project.projectId);
-		ResultSet res = ps.executeQuery();
-		System.out.println("UserStoryID \t ProjectID \t User \t Goal \t Priority \t Date");
-		while (res.next()) {
-			UserStory us = new UserStory(res);
-			us.print();
-		}
-	}
-
 	@Override
 	State update() throws SQLException {
 		String[] options = { "Delete project", "Add Sprint associated with project", "Add UserStory for project",
@@ -73,7 +61,7 @@ public class StateAccessProject extends State {
 			break;
 
 		case 5:
-			this.printUserStory();
+			this.db.printUserStories(this.project.projectId);
 			break;
 
 		default:
