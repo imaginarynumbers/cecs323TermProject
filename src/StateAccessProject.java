@@ -17,14 +17,6 @@ public class StateAccessProject extends State {
 		System.out.println("Deleted project " + this.project.title);
 	}
 
-	void insertSprint() throws SQLException {
-		String name = this.scan.raw_input("Sprint name: ");
-		String date = this.scan.raw_input("Beginning date of sprint (YYYY-MM-DD): ");
-		Sprint sprint = new Sprint(0, this.project.projectId, date, name);
-		sprint.insert(this.db);
-
-	}
-
 	void insertUserStory() throws SQLException {
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
@@ -54,7 +46,7 @@ public class StateAccessProject extends State {
 			break;
 
 		case 2:
-			this.insertSprint();
+			return new StateAddSprint(this.project);
 			break;
 
 		case 3:
