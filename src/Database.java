@@ -65,6 +65,16 @@ public class Database {
 		}
 	}
 
+	void printEmployees() throws SQLException {
+		ResultSet res = this.executeQuery("SELECT * FROM Employee");
+		System.out.println("First Name\tLast Name\tJob Title");
+		while (res.next()) {
+			Employee emp = new Employee(res);
+			emp.print();
+		}
+	}
+	
+
 	List<Project> getProjects() throws SQLException {
 		String query = "SELECT * FROM Project;";
 		ResultSet result = this.state.executeQuery(query);

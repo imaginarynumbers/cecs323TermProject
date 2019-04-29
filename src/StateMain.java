@@ -9,6 +9,7 @@ public class StateMain extends State {
 				"List all projects",
 				"Add project",
 				"Add an employee",
+				"List all employees",
 				"Access project",
 				"Quit"
 		};
@@ -24,11 +25,13 @@ public class StateMain extends State {
 			case 3:
 				return new StateAddEmployee();
 			case 4:
+				this.db.printEmployees();
+				break;
+			case 5:
 				Project selected = this.scan.<Project>select(this.db.getProjects());
 				if (selected != null)
 					return new StateAccessProject(selected);
 				break;
-				
 			default:
 				this.controller.stop();
 				break;
