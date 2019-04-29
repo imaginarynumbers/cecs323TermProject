@@ -9,7 +9,7 @@ public class StateAddProject extends State {
 		String desc = this.scan.raw_input("Project description: ");
 		Project project = new Project(0, name, desc);
 		project.insert(this.db);
-		
+
 		return new StateMain();
 	}
 

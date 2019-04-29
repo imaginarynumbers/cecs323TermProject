@@ -39,7 +39,7 @@ public class Database {
 		}
 		this.state = this.con.createStatement();
 	}
-	
+
 	ResultSet executeQuery(String query) throws SQLException {
 		return this.state.executeQuery(query);
 	}
@@ -56,7 +56,7 @@ public class Database {
 		}
 		System.out.println("Closed!");
 	}
-	
+
 	void printProjects() throws SQLException {
 		ResultSet res = this.executeQuery("SELECT * FROM Project;");
 		while (res.next()) {
@@ -64,12 +64,12 @@ public class Database {
 			pro.print();
 		}
 	}
-	
+
 	List<Project> getProjects() throws SQLException {
 		String query = "SELECT * FROM Project;";
 		ResultSet result = this.state.executeQuery(query);
 		List<Project> res = new ArrayList<>();
-		
+
 		while (result.next()) {
 			res.add(new Project(result));
 		}
@@ -77,5 +77,3 @@ public class Database {
 		return res;
 	}
 }
-
-
