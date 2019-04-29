@@ -9,14 +9,7 @@ public class StateMain extends State {
 	State update() throws SQLException {
 		String[] options = { "List all projects", "Add project", "Add an employee", "List all employees",
 				"Access project", "Quit" };
-
-		String pattern = "yyyy-MM-dd";
-		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
-		String test = simpleDateFormat.format(new Date());
-		System.out.println(test);
-		System.out.println("hue");
 		int rep = this.scan.showOptions("Welcome", options);
-
 		switch (rep) {
 		case 1:
 			this.db.printProjects();
