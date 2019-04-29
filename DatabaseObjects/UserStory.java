@@ -15,7 +15,8 @@ public class UserStory implements IDatabaseObject {
     String creationDate;
     int projectId;
 
-    UserStory(int storyId, String userAs, String wantTo, String because, int priority, String status, String creationDate, int projectId) {
+    UserStory(int storyId, String userAs, String wantTo, String because, int priority, String status,
+            String creationDate, int projectId) {
         this.storyId = storyId;
         this.userAs = userAs;
         this.wantTo = wantTo;
@@ -27,18 +28,13 @@ public class UserStory implements IDatabaseObject {
     }
 
     UserStory(ResultSet rs) throws SQLException {
-        this(rs.getInt(1), rs.getString(2),
-                rs.getString(3), rs.getString(4),
-                rs.getInt(5), rs.getString(6), rs.getString(7),
-                rs.getInt(8));
+        this(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
+                rs.getString(7), rs.getInt(8));
     }
-
-
 
     @Override
     public void print() {
-        System.out.println(this.storyId + "\t" + + this.projectId + "\t" + this.userAs + "\t" + this.wantTo + "\t" + this.priority +
-                "\t" + this.creationDate);
+        System.out.println(this.userAs + "\t" + this.wantTo + "\t" + this.priority + "\t\t" + this.creationDate);
     }
 
     @Override
@@ -48,10 +44,8 @@ public class UserStory implements IDatabaseObject {
 
     @Override
     public void insert(Database db) throws SQLException {
-        String query = "insert into UserStory " +
-                "(userAs, wantTo, because, priority, " +
-                "userStatus, creationDate, projectId) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?) ";
+        String query = "insert into UserStory " + "(userAs, wantTo, because, priority, "
+                + "userStatus, creationDate, projectId) " + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
         PreparedStatement ps = db.con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, this.userAs);
         ps.setString(2, this.wantTo);
