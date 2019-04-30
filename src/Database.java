@@ -39,7 +39,7 @@ public class Database {
 		}
 		this.state = this.con.createStatement();
 	}
-	
+
 	ResultSet executeQuery(String query) throws SQLException {
 		return this.state.executeQuery(query);
 	}
@@ -56,26 +56,80 @@ public class Database {
 		}
 		System.out.println("Closed!");
 	}
-	
-	void printProjects() throws SQLException {
-		ResultSet res = this.executeQuery("SELECT * FROM Project;");
-		while (res.next()) {
-			Project pro = new Project(res);
-			pro.print();
+
+	public <T extends IDatabaseObject> void printObjects(List<T> objects) {
+		for (T object : objects) {
+			object.print();
 		}
 	}
-	
+
+	void printProjects() throws SQLException {
+		this.<Project>printObjects(this.getProjects());
+	}
+
+	void printEmployees() throws SQLException {
+		this.<Employee>printObjects(this.getEmployees());
+	}
+
+	void printSprints(int projectId) throws SQLException {
+		System.out.println("SprintID \t ProjectID \t Date \t sprintName");
+		this.<Sprint>printObjects(this.getSprints(projectId));
+	}
+
+	void printUserStories(int projectId) throws SQLException {
+		System.out.println("As \tI want to\t Priority\tCreation date");
+		this.<UserStory>printObjects(this.getUserStories(projectId));
+	}
+
+	List<Employee> getEmployees() throws SQLException {
+		String query = "SELECT * FROM Employee";
+		ResultSet result = this.state.executeQuery(query);
+		List<Employee> res = new ArrayList<>();
+
+		while (result.next()) {
+			res.add(new Employee(result));
+		}
+		result.close();
+		return res;
+	}
+
 	List<Project> getProjects() throws SQLException {
 		String query = "SELECT * FROM Project;";
 		ResultSet result = this.state.executeQuery(query);
 		List<Project> res = new ArrayList<>();
-		
+
 		while (result.next()) {
 			res.add(new Project(result));
 		}
 		result.close();
 		return res;
 	}
+
+	List<Sprint> getSprints(int projectId) throws SQLException {
+		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
+		PreparedStatement ps = this.con.prepareStatement(query);
+		ps.setInt(1, projectId);
+		ResultSet res = ps.executeQuery();
+		List<Sprint> result = new ArrayList<>();
+
+		while (res.next()) {
+			result.add(new Sprint(res));
+		}
+		res.close();
+		return result;
+	}
+
+	List<UserStory> getUserStories(int projectId) throws SQLException {
+		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
+		PreparedStatement ps = this.con.prepareStatement(query);
+		ps.setInt(1, projectId);
+		ResultSet res = ps.executeQuery();
+		List<UserStory> result = new ArrayList<>();
+
+		while (res.next()) {
+			result.add(new UserStory(res));
+		}
+		res.close();
+		return result;
+	}
 }
-
-

@@ -8,24 +8,25 @@
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-<<<<<<< HEAD
-            "mainClass": "${file}"
-=======
+            "mainClass": "${file},
             "mainClass": "${file}",
             "console": "externalTerminal",
->>>>>>> 8a514f679d60b720dc5327fd463651c6d677f726
         },
         {
             "type": "java",
             "name": "Debug (Launch)-Main<cecs323TermProject>",
             "request": "launch",
             "mainClass": "Main",
-<<<<<<< HEAD
-            "projectName": "cecs323TermProject"
-=======
             "projectName": "cecs323TermProject",
             "console": "externalTerminal",
->>>>>>> 8a514f679d60b720dc5327fd463651c6d677f726
         }
     ]
 }
+
+
+
+^X
+
+
+
+
