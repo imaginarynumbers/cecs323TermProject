@@ -9,6 +9,10 @@ public class StateAccessSprint extends State {
     Project project;
     Sprint sprint;
 
+    void addUserStoryToSprintBacklog() {
+
+    }
+
     StateAccessSprint(Project project, Sprint sprint) {
         this.project = project;
         this.sprint = sprint;
@@ -16,10 +20,11 @@ public class StateAccessSprint extends State {
 
     @Override
     State update() throws SQLException {
-        String[] options = { "Add user story to sprint", "Delete dev", "Add dev", "Return to main" };
+        String[] options = { "Add user story to sprint backlog", "Delete dev", "Add dev", "Return to main" };
         int rep = this.scan.showOptions("Sprint " + this.sprint.name, options);
         switch (rep) {
         case 1:
+            this.addUserStoryToSprintBacklog();
             break;
 
         case 2:

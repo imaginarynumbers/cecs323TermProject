@@ -44,8 +44,8 @@ public class StateAccessProject extends State {
 
 	@Override
 	State update() throws SQLException {
-		String[] options = { "Delete project", "Add Sprint associated with project", "Add UserStory for project",
-				"View Sprints", "Access Sprint", "View project backlog", "Return to main" };
+		String[] options = { "Delete project", "Create Sprint", "Create UserStory", "View Sprints", "Access Sprint",
+				"View project backlog", "Return to main" };
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
 		switch (rep) {
 		case 1:
