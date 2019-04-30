@@ -34,12 +34,13 @@ public class UserStory implements IDatabaseObject {
 
     @Override
     public void print() {
-        System.out.println(this.userAs + "\t" + this.wantTo + "\t" + this.priority + "\t\t" + this.creationDate);
+        System.out.println("As " + this.userAs + " I want to " + this.wantTo + " because " + this.because
+                + ". priority:" + this.priority + "\t" + this.creationDate);
     }
 
     @Override
     public String getTitle() {
-        return this.storyId + "\t" + this.userAs + "\t" + this.wantTo + "\t" + this.because + "\t" + this.priority;
+        return "As " + this.userAs + " I want to " + this.wantTo + " because " + this.because;
     }
 
     @Override
