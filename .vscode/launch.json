@@ -14,7 +14,7 @@
         {
             "type": "java",
             "name": "Debug (Launch)-Main<cecs323TermProject>",
-            "request": "launch",
+                "request": "launch",
             "mainClass": "Main",
             "projectName": "cecs323TermProject",
             "console": "externalTerminal",
