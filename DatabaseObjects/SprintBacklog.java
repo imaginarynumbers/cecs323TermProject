@@ -31,7 +31,7 @@ public class SprintBacklog implements IDatabaseObject {
 
     @Override
     public void insert(Database db) throws SQLException {
-        String query = "INSERT INTO SprintBacklog (employeeId, sprintId, storyId)" + " VALUES (?, ?, ?)";
+        String query = "INSERT INTO SprintBacklog (employeeId, sprintId, storyId) VALUES (?, ?, ?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.employeeId);
         ps.setInt(2, this.sprintId);
@@ -41,7 +41,7 @@ public class SprintBacklog implements IDatabaseObject {
 
     @Override
     public void delete(Database db) throws SQLException {
-        String query = "DELETE FROM SprintBacklog where employeeId = (?) AND sprintId = (?) AND storyId = (?)";
+        String query = "DELETE FROM SprintBacklog WHERE employeeId = (?) AND sprintId = (?) AND storyId = (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.employeeId);
         ps.setInt(2, this.sprintId);
