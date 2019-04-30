@@ -80,9 +80,9 @@ public class Employee implements IDatabaseObject {
 		String query = "DELETE FROM Employee WHERE employeeId = ?;";
 		
 		try {
-	        PreparedStatement ps = db.con.prepareStatement(query);
-	        ps.setInt(1, this.employeeId);
-	        ps.execute();
+		        PreparedStatement ps = db.con.prepareStatement(query);
+		        ps.setInt(1, this.employeeId);
+		        ps.execute();
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
