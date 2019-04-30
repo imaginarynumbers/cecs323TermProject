@@ -26,7 +26,7 @@ public class Employee implements IDatabaseObject {
     }
 
     /*
-     * Overrides IDatabase Interface method delete.
+     * Overrides IDatabase Interface method print.
      * Prints employee information.
      */
     @Override
@@ -35,7 +35,7 @@ public class Employee implements IDatabaseObject {
     }
 
     /*
-     * Overrides IDatabase Interface method delete.
+     * Overrides IDatabase Interface method getTitle().
      * Returns the employee name in a string.
      */
     @Override
@@ -44,7 +44,7 @@ public class Employee implements IDatabaseObject {
     }
 
     /*
-     * Overrides IDatabase Interface method delete.
+     * Overrides IDatabase Interface method insert().
      * Inserts new emlpoyee into database.
      * @param db: database object to be manipulated.
      */
@@ -80,9 +80,9 @@ public class Employee implements IDatabaseObject {
 		String query = "DELETE FROM Employee WHERE employeeId = ?;";
 		
 		try {
-		        PreparedStatement ps = db.con.prepareStatement(query);
-		        ps.setInt(1, this.employeeId);
-		        ps.execute();
+	        PreparedStatement ps = db.con.prepareStatement(query);
+	        ps.setInt(1, this.employeeId);
+	        ps.execute();
 	        
 		} catch (SQLException e) {
 			e.printStackTrace();
