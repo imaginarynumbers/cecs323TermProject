@@ -8,14 +8,16 @@
             "type": "java",
             "name": "Debug (Launch) - Current File",
             "request": "launch",
-            "mainClass": "${file}"
+            "mainClass": "${file}",
+            "console": "externalTerminal",
         },
         {
             "type": "java",
             "name": "Debug (Launch)-Main<cecs323TermProject>",
             "request": "launch",
             "mainClass": "Main",
-            "projectName": "cecs323TermProject"
+            "projectName": "cecs323TermProject",
+            "console": "externalTerminal",
         }
     ]
 }
