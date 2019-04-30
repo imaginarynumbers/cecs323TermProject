@@ -20,6 +20,18 @@ public class Employee implements IDatabaseObject {
         this(resultSet.getInt(1), resultSet.getString(2),
                 resultSet.getString(3), resultSet.getString(4));
     }
+    
+    public int getEmployeeId() {
+        return employeeId;
+    }
+    
+    public String getName() {
+        return fName + " " + lName;
+    }
+    
+    public String getJobTitle() {
+        return jobTitle;
+    }
 
 
     @Override
