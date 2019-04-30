@@ -31,10 +31,21 @@ public class StateAccessProject extends State {
 		us.insert(this.db);
 	}
 
+	Sprint insertSprint() throws SQLException {
+		String name = this.scan.raw_input("Sprint name: ");
+		String date = this.scan.raw_input("Beginning date of sprint (YYYY-MM-DD): ");
+		Sprint sprint = new Sprint(0, this.project.projectId, date, name);
+		System.out.println("Adding sprint:");
+		sprint.print();
+		sprint.insert(this.db);
+		return sprint;
+
+	}
+
 	@Override
 	State update() throws SQLException {
 		String[] options = { "Delete project", "Add Sprint associated with project", "Add UserStory for project",
-				"View Sprints", "View UserStories", "Return to main" };
+				"View Sprints", "Access Sprint", "View project backlog", "Return to main" };
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
 		switch (rep) {
 		case 1:
@@ -46,8 +57,7 @@ public class StateAccessProject extends State {
 			break;
 
 		case 2:
-			return new StateAddSprint(this.project);
-			break;
+			return new StateAccessSprint(this.project, this.insertSprint());
 
 		case 3:
 			this.insertUserStory();
@@ -58,6 +68,10 @@ public class StateAccessProject extends State {
 			break;
 
 		case 5:
+			Sprint sprint = this.scan.<Sprint>select(this.db.getSprints(this.project.projectId));
+			return new StateAccessSprint(this.project, sprint);
+
+		case 6:
 			this.db.printUserStories(this.project.projectId);
 			break;
 
