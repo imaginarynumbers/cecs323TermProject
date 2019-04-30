@@ -9,8 +9,9 @@ public class StateAccessSprint extends State {
     Project project;
     Sprint sprint;
 
-    void addUserStoryToSprintBacklog() {
-
+    void addUserStoryToSprintBacklog() throws SQLException {
+        UserStory us = this.scan.<UserStory>select(this.db.getUserStories(this.project.projectId));
+        Employee emp = this.scan.<Employee>select(this.db.getEmployees());
     }
 
     StateAccessSprint(Project project, Sprint sprint) {
