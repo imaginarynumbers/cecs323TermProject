@@ -5,10 +5,15 @@ import java.sql.SQLException;
 public class ScrumMember implements IDatabaseObject {
     private int scrumId;
     private int employeeId;
+    private Employee employee;
 
     public ScrumMember(int scrumId, int employeeId) {
         this.scrumId = scrumId;
         this.employeeId = employeeId;
+    }
+    
+    public ScrumMember(Employee employee) {
+        this.employee = employee;
     }
 
     public ScrumMember(ResultSet result) throws SQLException {
