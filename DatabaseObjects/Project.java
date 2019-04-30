@@ -26,8 +26,8 @@ public class Project implements IDatabaseObject {
 	}
 
 	/*
-     * Overrides IDatabase Interface method print().
-     * Prints project id, title, and description.
+	     * Overrides IDatabase Interface method print().
+	     * Prints project id, title, and description.
 	 */
 	@Override
 	public void print() {
