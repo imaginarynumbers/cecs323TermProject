@@ -19,7 +19,9 @@ public class StateAccessSprint extends State {
 
     void deleteBacklog() throws SQLException {
         SprintBacklog backlog = this.scan.<SprintBacklog>select(this.sprint.getBacklogs());
-        backlog.delete();
+        String rep = this.scan.raw_input("Are you sure you want to remove: " + backlog.getTitle() + "\n(y/n): ");
+        if (rep.toLowerCase().equals("y"))
+            backlog.delete();
     }
 
     void listDevelopers() throws SQLException {
@@ -53,6 +55,7 @@ public class StateAccessSprint extends State {
 
         case 4:
             this.listDevelopers();
+            break;
 
         default:
             return new StateAccessProject(project);
