@@ -52,4 +52,6 @@ public class Sprint implements IDatabaseObject {
         ps.setInt(1, this.sprintId);
         ps.execute();
     }
+
+
 }

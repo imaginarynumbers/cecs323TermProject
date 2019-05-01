@@ -21,9 +21,28 @@ public class StateAccessSprint extends State {
         this.sprint = sprint;
     }
 
+    void viewDevelopers() throws SQLException {
+        String query = "select " +
+                "    Employee.* " +
+                "from Project " +
+                "inner join ScrumTeam ST on Project.projectId = ST.projectId " +
+                "inner join ScrumMember SM on ST.scrumId = SM.scrumId " +
+                "inner join Employee on Employee.employeeId = SM.employeeId " +
+                "inner join Sprint S on Project.projectId = S.projectId " +
+                "WHERE  S.sprintId = (?)";
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, this.sprint.sprintId);
+        ResultSet rs = ps.executeQuery();
+        while (rs.next()) {
+            Employee emp = new Employee(rs);
+            emp.print();
+        }
+    }
+
     @Override
     State update() throws SQLException {
-        String[] options = { "Add backlog", "Delete backlog", "List backlog," "Return to main" };
+        String[] options = { "Add backlog", "Delete backlog", "List backlog",
+                "List developers of Sprint", "Return to main" };
         int rep = this.scan.showOptions("Sprint " + this.sprint.name, options);
         switch (rep) {
         case 1:
@@ -35,6 +54,9 @@ public class StateAccessSprint extends State {
 
         case 3:
             break;
+
+        case 4:
+            this.viewDevelopers();
 
         default:
             return new StateMain();

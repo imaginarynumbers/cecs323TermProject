@@ -65,7 +65,7 @@ public class UserStory implements IDatabaseObject {
 
     @Override
     public void delete(Database db) throws SQLException {
-        String query = "DELETE FROM UserStory wher storyId = (?)";
+        String query = "DELETE FROM UserStory where storyId = (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.storyId);
         ps.execute();
