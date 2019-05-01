@@ -1,0 +1,17 @@
+
+TODO LIST
+
+we need to limit the user: the user story status should only be:
+To-do
+Build-and-document
+Testing
+Completed, (i.e. passed testing)
+And it cant be changed during the sprint
+
+------------
+
+Project.getUserStories should exclude user stories which already are in a sprint
+
+------------
+
+
