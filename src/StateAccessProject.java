@@ -13,7 +13,7 @@ public class StateAccessProject extends State {
 	}
 
 	void deleteProject() throws SQLException {
-		this.project.delete(this.db);
+		this.project.delete();
 		System.out.println("Deleted project " + this.project.title);
 	}
 
@@ -27,17 +27,17 @@ public class StateAccessProject extends State {
 		String because = this.scan.raw_input("Because: ");
 		int priority = Integer.parseInt(this.scan.raw_input("Priority (int): "));
 		String status = this.scan.raw_input("Status: "); // Should be an enum here
-		UserStory us = new UserStory(0, as, wantTo, because, priority, status, date, this.project.projectId);
-		us.insert(this.db);
+		UserStory us = new UserStory(this.db, 0, as, wantTo, because, priority, status, date, this.project.projectId);
+		us.insert();
 	}
 
 	Sprint insertSprint() throws SQLException {
 		String name = this.scan.raw_input("Sprint name: ");
 		String date = this.scan.raw_input("Beginning date of sprint (YYYY-MM-DD): ");
-		Sprint sprint = new Sprint(0, this.project.projectId, date, name);
+		Sprint sprint = new Sprint(this.db, 0, this.project.projectId, date, name);
 		System.out.println("Adding sprint:");
 		sprint.print();
-		sprint.insert(this.db);
+		sprint.insert();
 		return sprint;
 
 	}

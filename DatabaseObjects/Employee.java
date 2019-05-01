@@ -3,21 +3,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Employee implements IDatabaseObject {
+public class Employee extends DatabaseObject {
     int employeeId;
     String fName;
     String lName;
     String jobTitle;
 
-    Employee(int employeeId, String fName, String lName, String jobTitle) {
+    Employee(Database db, int employeeId, String fName, String lName, String jobTitle) {
+        super(db);
         this.employeeId = employeeId;
         this.fName = fName;
         this.lName = lName;
         this.jobTitle = jobTitle;
     }
 
-    Employee(ResultSet resultSet) throws SQLException {
-        this(resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4));
+    Employee(Database db, ResultSet resultSet) throws SQLException {
+        this(db, resultSet.getInt(1), resultSet.getString(2), resultSet.getString(3), resultSet.getString(4));
     }
 
     @Override
@@ -31,7 +32,7 @@ public class Employee implements IDatabaseObject {
     }
 
     @Override
-    public void insert(Database db) throws SQLException {
+    public void insert() throws SQLException {
         String query = "INSERT INTO Employee (fname, lname, jobTitle) " + "VALUES (?, ?, ?)";
         PreparedStatement ps = db.con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setString(1, this.fName);
@@ -47,7 +48,7 @@ public class Employee implements IDatabaseObject {
     }
 
     @Override
-    public void delete(Database db) throws SQLException {
+    public void delete() throws SQLException {
         String query = "DELETE FROM Employee WHERE employeeId = ?;";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.employeeId);

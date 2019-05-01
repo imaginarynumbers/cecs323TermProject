@@ -3,20 +3,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Project implements IDatabaseObject {
+public class Project extends DatabaseObject {
 	int projectId;
 	String title;
 	String description;
 
-	Project(int projectId, String title, String description) {
+	Project(Database db, int projectId, String title, String description) {
+		super(db);
 		this.projectId = projectId;
 		this.title = title;
 		this.description = description;
 
 	}
 
-	Project(ResultSet result) throws SQLException {
-		this(result.getInt(1), result.getString(2), result.getString(3));
+	Project(Database db, ResultSet result) throws SQLException {
+		this(db, result.getInt(1), result.getString(2), result.getString(3));
 	}
 
 	@Override
@@ -25,7 +26,7 @@ public class Project implements IDatabaseObject {
 	}
 
 	@Override
-	public void insert(Database db) throws SQLException {
+	public void insert() throws SQLException {
 		String query = "INSERT INTO Project (title, description)" + " VALUES (?, ?)";
 		PreparedStatement ps = db.con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		ps.setString(1, this.title);
@@ -44,7 +45,7 @@ public class Project implements IDatabaseObject {
 	}
 
 	@Override
-	public void delete(Database db) throws SQLException {
+	public void delete() throws SQLException {
 		String query = "DELETE FROM Project WHERE projectId = ?;";
 		PreparedStatement ps = db.con.prepareStatement(query);
 		ps.setInt(1, this.projectId);

@@ -57,7 +57,7 @@ public class Database {
 		System.out.println("Closed!");
 	}
 
-	public <T extends IDatabaseObject> void printObjects(List<T> objects) throws SQLException {
+	public <T extends DatabaseObject> void printObjects(List<T> objects) throws SQLException {
 		for (T object : objects) {
 			object.print();
 		}
@@ -87,7 +87,7 @@ public class Database {
 		List<Employee> res = new ArrayList<>();
 
 		while (result.next()) {
-			res.add(new Employee(result));
+			res.add(new Employee(this, result));
 		}
 		result.close();
 		return res;
@@ -99,7 +99,7 @@ public class Database {
 		List<Project> res = new ArrayList<>();
 
 		while (result.next()) {
-			res.add(new Project(result));
+			res.add(new Project(this, result));
 		}
 		result.close();
 		return res;
@@ -113,7 +113,7 @@ public class Database {
 		List<Sprint> result = new ArrayList<>();
 
 		while (res.next()) {
-			result.add(new Sprint(res));
+			result.add(new Sprint(this, res));
 		}
 		res.close();
 		return result;
@@ -127,7 +127,7 @@ public class Database {
 		List<UserStory> result = new ArrayList<>();
 
 		while (res.next()) {
-			result.add(new UserStory(res));
+			result.add(new UserStory(this, res));
 		}
 		res.close();
 		return result;

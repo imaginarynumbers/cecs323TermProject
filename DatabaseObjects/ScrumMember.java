@@ -2,17 +2,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ScrumMember implements IDatabaseObject {
+public class ScrumMember extends DatabaseObject {
     private int scrumId;
     private int employeeId;
 
-    ScrumMember(int scrumId, int employeeId) {
+    ScrumMember(Database db, int scrumId, int employeeId) {
+        super(db);
         this.scrumId = scrumId;
         this.employeeId = employeeId;
     }
 
-    ScrumMember(ResultSet result) throws SQLException {
-        this(result.getInt(1), result.getInt(2));
+    ScrumMember(Database db, ResultSet result) throws SQLException {
+        this(db, result.getInt(1), result.getInt(2));
     }
 
     @Override
@@ -26,7 +27,7 @@ public class ScrumMember implements IDatabaseObject {
     }
 
     @Override
-    public void insert(Database db) throws SQLException {
+    public void insert() throws SQLException {
         String query = "INSERT INTO ScrumMember (scrumId, employeeId) VALUES (?, ?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.scrumId);
@@ -35,7 +36,7 @@ public class ScrumMember implements IDatabaseObject {
     }
 
     @Override
-    public void delete(Database db) throws SQLException {
+    public void delete() throws SQLException {
         String query = "DELETE FROM ScrumMember WHERE scrumId = (?) AND employeeId= (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.scrumId);

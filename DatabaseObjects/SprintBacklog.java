@@ -3,13 +3,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class SprintBacklog implements IDatabaseObject {
+public class SprintBacklog extends DatabaseObject {
     Database db;
     int employeeId;
     int sprintId;
     int storyId;
 
     SprintBacklog(Database db, int employeeId, int sprintId, int storyId) {
+        super(db);
         this.db = db;
         this.employeeId = employeeId;
         this.sprintId = sprintId;
@@ -49,7 +50,7 @@ public class SprintBacklog implements IDatabaseObject {
     }
 
     @Override
-    public void insert(Database db) throws SQLException {
+    public void insert() throws SQLException {
         String query = "INSERT INTO SprintBacklog (employeeId, sprintId, storyId) VALUES (?, ?, ?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.employeeId);
@@ -59,7 +60,7 @@ public class SprintBacklog implements IDatabaseObject {
     }
 
     @Override
-    public void delete(Database db) throws SQLException {
+    public void delete() throws SQLException {
         String query = "DELETE FROM SprintBacklog WHERE employeeId = (?) AND sprintId = (?) AND storyId = (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.employeeId);

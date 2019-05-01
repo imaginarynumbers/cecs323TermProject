@@ -9,15 +9,15 @@ public class StateMain extends State {
 		String fName = this.scan.raw_input("First name: ");
 		String lName = this.scan.raw_input("Last name: ");
 		String jobTitle = this.scan.raw_input("Job title: ");
-		Employee employee = new Employee(0, fName, lName, jobTitle);
-		employee.insert(this.db);
+		Employee employee = new Employee(this.db, 0, fName, lName, jobTitle);
+		employee.insert();
 	}
 
 	void addProject() throws SQLException {
 		String name = this.scan.raw_input("Project name: ");
 		String desc = this.scan.raw_input("Project description: ");
-		Project project = new Project(0, name, desc);
-		project.insert(this.db);
+		Project project = new Project(this.db, 0, name, desc);
+		project.insert();
 	}
 
 	@Override

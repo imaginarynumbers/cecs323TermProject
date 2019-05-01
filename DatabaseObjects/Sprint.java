@@ -3,21 +3,22 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class Sprint implements IDatabaseObject {
+public class Sprint extends DatabaseObject {
     int sprintId;
     int projectId;
     String sprintBegin;
     String name;
 
-    Sprint(int sprintId, int projectId, String sprintBegin, String name) {
+    Sprint(Database db, int sprintId, int projectId, String sprintBegin, String name) {
+        super(db);
         this.sprintId = sprintId;
         this.projectId = projectId;
         this.sprintBegin = sprintBegin;
         this.name = name;
     }
 
-    Sprint(ResultSet rs) throws SQLException {
-        this(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
+    Sprint(Database db, ResultSet rs) throws SQLException {
+        this(db, rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getString(4));
     }
 
     @Override
@@ -31,7 +32,7 @@ public class Sprint implements IDatabaseObject {
     }
 
     @Override
-    public void insert(Database db) throws SQLException {
+    public void insert() throws SQLException {
         String query = "INSERT INTO Sprint (projectId, sprintBegin, name)" + " VALUES (?, ?, ?)";
         PreparedStatement ps = db.con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         ps.setInt(1, this.projectId);
@@ -46,7 +47,7 @@ public class Sprint implements IDatabaseObject {
     }
 
     @Override
-    public void delete(Database db) throws SQLException {
+    public void delete() throws SQLException {
         String query = "DELETE FROM Sprint where sprintId = (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.sprintId);
