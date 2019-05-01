@@ -16,6 +16,11 @@ public class StateAccessSprint extends State {
         bl.insert();
     }
 
+    void deleteBacklog() throws SQLException {
+        SprintBacklog backlog = this.scan.<SprintBacklog>select(this.sprint.getBacklogs());
+        backlog.delete();
+    }
+
     StateAccessSprint(Project project, Sprint sprint) {
         this.project = project;
         this.sprint = sprint;
@@ -31,6 +36,7 @@ public class StateAccessSprint extends State {
             break;
 
         case 2:
+            this.deleteBacklog();
             break;
 
         case 3:
