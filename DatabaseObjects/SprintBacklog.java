@@ -4,14 +4,12 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SprintBacklog extends DatabaseObject {
-    Database db;
     int employeeId;
     int sprintId;
     int storyId;
 
     SprintBacklog(Database db, int employeeId, int sprintId, int storyId) {
         super(db);
-        this.db = db;
         this.employeeId = employeeId;
         this.sprintId = sprintId;
         this.storyId = storyId;
@@ -34,7 +32,7 @@ public class SprintBacklog extends DatabaseObject {
                 + "FROM SprintBacklog\n" + "NATURAL JOIN Employee,Sprint,UserStory\n"
                 + "WHERE (UserStory.storyId=(?) AND Sprint.sprintId=(?) AND Employee.employeeId=(?))\n"
                 + "ORDER BY UserStory.priority;";
-        PreparedStatement ps = db.con.prepareStatement(query);
+        PreparedStatement ps = this.db.con.prepareStatement(query);
         ps.setInt(1, this.storyId);
         ps.setInt(2, this.sprintId);
         ps.setInt(3, this.employeeId);
