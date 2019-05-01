@@ -60,12 +60,11 @@ public class Project extends DatabaseObject {
 	}
 
 	void printUserStories() throws SQLException {
-		System.out.println("As \tI want to\t Priority\tCreation date");
 		this.db.<UserStory>printObjects(this.getUserStories());
 	}
 
 	List<Sprint> getSprints() throws SQLException {
-		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
+		String query = "SELECT * FROM Sprint WHERE projectId = (?)";
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();
@@ -79,7 +78,7 @@ public class Project extends DatabaseObject {
 	}
 
 	List<UserStory> getUserStories() throws SQLException {
-		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
+		String query = "SELECT * FROM UserStory WHERE projectId = (?)";
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();

@@ -35,8 +35,8 @@ public class UserStory extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println("As " + this.userAs + " I want to " + this.wantTo + " because " + this.because
-                + ". priority:" + this.priority + "\t" + this.creationDate);
+        System.out.println("Priority: " + this.priority + "\t" + this.creationDate + " As " + this.userAs
+                + " I want to " + this.wantTo + " because " + this.because);
     }
 
     @Override
