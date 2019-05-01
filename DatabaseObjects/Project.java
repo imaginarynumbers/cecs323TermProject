@@ -2,6 +2,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Project extends DatabaseObject {
 	int projectId;
@@ -50,5 +52,43 @@ public class Project extends DatabaseObject {
 		PreparedStatement ps = db.con.prepareStatement(query);
 		ps.setInt(1, this.projectId);
 		ps.execute();
+	}
+
+	void printSprints() throws SQLException {
+		System.out.println("SprintID \t ProjectID \t Date \t sprintName");
+		this.db.<Sprint>printObjects(this.getSprints());
+	}
+
+	void printUserStories() throws SQLException {
+		System.out.println("As \tI want to\t Priority\tCreation date");
+		this.db.<UserStory>printObjects(this.getUserStories());
+	}
+
+	List<Sprint> getSprints() throws SQLException {
+		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
+		PreparedStatement ps = this.db.con.prepareStatement(query);
+		ps.setInt(1, projectId);
+		ResultSet res = ps.executeQuery();
+		List<Sprint> result = new ArrayList<>();
+
+		while (res.next()) {
+			result.add(new Sprint(this.db, res));
+		}
+		res.close();
+		return result;
+	}
+
+	List<UserStory> getUserStories() throws SQLException {
+		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
+		PreparedStatement ps = this.db.con.prepareStatement(query);
+		ps.setInt(1, projectId);
+		ResultSet res = ps.executeQuery();
+		List<UserStory> result = new ArrayList<>();
+
+		while (res.next()) {
+			result.add(new UserStory(this.db, res));
+		}
+		res.close();
+		return result;
 	}
 }

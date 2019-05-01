@@ -64,15 +64,15 @@ public class StateAccessProject extends State {
 			break;
 
 		case 4:
-			this.db.printSprints(this.project.projectId);
+			this.project.printSprints();
 			break;
 
 		case 5:
-			Sprint sprint = this.scan.<Sprint>select(this.db.getSprints(this.project.projectId));
+			Sprint sprint = this.scan.<Sprint>select(this.project.getSprints());
 			return new StateAccessSprint(this.project, sprint);
 
 		case 6:
-			this.db.printUserStories(this.project.projectId);
+			this.project.printUserStories();
 			break;
 
 		default:

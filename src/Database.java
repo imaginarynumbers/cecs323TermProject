@@ -71,16 +71,6 @@ public class Database {
 		this.<Employee>printObjects(this.getEmployees());
 	}
 
-	void printSprints(int projectId) throws SQLException {
-		System.out.println("SprintID \t ProjectID \t Date \t sprintName");
-		this.<Sprint>printObjects(this.getSprints(projectId));
-	}
-
-	void printUserStories(int projectId) throws SQLException {
-		System.out.println("As \tI want to\t Priority\tCreation date");
-		this.<UserStory>printObjects(this.getUserStories(projectId));
-	}
-
 	List<Employee> getEmployees() throws SQLException {
 		String query = "SELECT * FROM Employee";
 		ResultSet result = this.state.executeQuery(query);
@@ -105,31 +95,4 @@ public class Database {
 		return res;
 	}
 
-	List<Sprint> getSprints(int projectId) throws SQLException {
-		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
-		PreparedStatement ps = this.con.prepareStatement(query);
-		ps.setInt(1, projectId);
-		ResultSet res = ps.executeQuery();
-		List<Sprint> result = new ArrayList<>();
-
-		while (res.next()) {
-			result.add(new Sprint(this, res));
-		}
-		res.close();
-		return result;
-	}
-
-	List<UserStory> getUserStories(int projectId) throws SQLException {
-		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
-		PreparedStatement ps = this.con.prepareStatement(query);
-		ps.setInt(1, projectId);
-		ResultSet res = ps.executeQuery();
-		List<UserStory> result = new ArrayList<>();
-
-		while (res.next()) {
-			result.add(new UserStory(this, res));
-		}
-		res.close();
-		return result;
-	}
 }
