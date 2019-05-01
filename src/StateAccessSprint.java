@@ -23,7 +23,7 @@ public class StateAccessSprint extends State {
 
     @Override
     State update() throws SQLException {
-        String[] options = { "Add backlog", "Delete backlog", "List backlogs", "Return to main" };
+        String[] options = { "Add backlog", "Delete backlog", "List backlogs", "Return to project" };
         int rep = this.scan.showOptions("Sprint " + this.sprint.name, options);
         switch (rep) {
         case 1:
@@ -34,10 +34,11 @@ public class StateAccessSprint extends State {
             break;
 
         case 3:
+            this.sprint.printBacklogs();
             break;
 
         default:
-            return new StateMain();
+            return new StateAccessProject(project);
         }
         return null;
     }

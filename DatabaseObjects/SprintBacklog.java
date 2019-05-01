@@ -22,7 +22,7 @@ public class SprintBacklog extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println("To be implemented");
+        System.out.println(this.getTitle());
     }
 
     @Override

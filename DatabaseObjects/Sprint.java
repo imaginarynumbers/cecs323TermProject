@@ -2,6 +2,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Sprint extends DatabaseObject {
     int sprintId;
@@ -52,5 +54,23 @@ public class Sprint extends DatabaseObject {
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.sprintId);
         ps.execute();
+    }
+
+    void printBacklogs() throws SQLException {
+        this.db.<SprintBacklog>printObjects(this.getBacklogs());
+    }
+
+    List<SprintBacklog> getBacklogs() throws SQLException {
+        String query = "SELECT * FROM SprintBacklog WHERE sprintId = (?)";
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, sprintId);
+        ResultSet res = ps.executeQuery();
+        List<SprintBacklog> result = new ArrayList<>();
+
+        while (res.next()) {
+            result.add(new SprintBacklog(this.db, res));
+        }
+        res.close();
+        return result;
     }
 }
