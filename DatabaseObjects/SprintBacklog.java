@@ -29,10 +29,6 @@ public class SprintBacklog extends DatabaseObject {
 
     @Override
     public String getTitle() throws SQLException {
-        return "To be implemented";
-    }
-
-    public String getTitle(Database db) throws SQLException {
         String query = "SELECT UserStory.priority, Employee.fname, Employee.lname,\n"
                 + "UserStory.userAs, UserStory.wantTo, UserStory.because, UserStory.userStatus\n"
                 + "FROM SprintBacklog\n" + "NATURAL JOIN Employee,Sprint,UserStory\n"
@@ -43,10 +39,17 @@ public class SprintBacklog extends DatabaseObject {
         ps.setInt(2, this.sprintId);
         ps.setInt(3, this.employeeId);
         ResultSet res = ps.executeQuery();
+        StringBuilder sb = new StringBuilder();
         if (res.next()) {
-
+            sb.append(res.getInt(1)); // priority
+            sb.append(" " + res.getString(2)); // fname
+            sb.append(" " + res.getString(3)); // lname
+            sb.append(". As " + res.getString(4)); // userAs
+            sb.append(" I want to " + res.getString(5)); // wantTo
+            sb.append(" because " + res.getString(6)); // because
+            sb.append(". Status: " + res.getString(7)); // status
         }
-        return "To be implemented";
+        return sb.toString();
     }
 
     @Override
