@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class StateAccessSprint extends State {
 
@@ -21,6 +22,13 @@ public class StateAccessSprint extends State {
         backlog.delete();
     }
 
+    void listDevelopers() throws SQLException {
+        List<Employee> employees = this.sprint.getEmployees();
+        for (Employee emp : employees) {
+            emp.print();
+        }
+    }
+
     StateAccessSprint(Project project, Sprint sprint) {
         this.project = project;
         this.sprint = sprint;
@@ -28,7 +36,7 @@ public class StateAccessSprint extends State {
 
     @Override
     State update() throws SQLException {
-        String[] options = { "Add backlog", "Delete backlog", "List backlogs", "Return to project" };
+        String[] options = { "Add backlog", "Delete backlog", "List backlogs", "List developers", "Return to project" };
         int rep = this.scan.showOptions("Sprint " + this.sprint.name, options);
         switch (rep) {
         case 1:
@@ -42,6 +50,9 @@ public class StateAccessSprint extends State {
         case 3:
             this.sprint.printBacklogs();
             break;
+
+        case 4:
+            this.listDevelopers();
 
         default:
             return new StateAccessProject(project);

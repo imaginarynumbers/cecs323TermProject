@@ -2,6 +2,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 public class SprintBacklog extends DatabaseObject {
     int employeeId;
@@ -68,5 +69,23 @@ public class SprintBacklog extends DatabaseObject {
         ps.setInt(2, this.sprintId);
         ps.setInt(3, this.storyId);
         ps.execute();
+    }
+
+    public Employee getEmployee() throws SQLException {
+        String query = "SELECT DISTINCT Employee.* FROM SprintBacklog NATURAL JOIN Employee,Sprint,UserStory"
+                + " WHERE (UserStory.storyId=(?) AND Sprint.sprintId=(?) AND Employee.employeeId=(?))"
+                + " ORDER BY UserStory.priority;";
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, this.storyId);
+        ps.setInt(2, this.sprintId);
+        ps.setInt(3, this.employeeId);
+        ResultSet res = ps.executeQuery();
+        Employee result = null;
+
+        if (res.next()) {
+            result = new Employee(this.db, res);
+        }
+        res.close();
+        return result;
     }
 }
