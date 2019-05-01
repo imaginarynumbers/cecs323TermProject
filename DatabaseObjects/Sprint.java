@@ -21,12 +21,12 @@ public class Sprint implements IDatabaseObject {
     }
 
     @Override
-    public void print() {
+    public void print() throws SQLException {
         System.out.println(this.sprintId + "\t" + this.projectId + "\t" + this.sprintBegin + "\t" + this.name);
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle() throws SQLException {
         return this.sprintBegin + " " + this.name;
     }
 

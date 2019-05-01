@@ -57,7 +57,7 @@ public class Database {
 		System.out.println("Closed!");
 	}
 
-	public <T extends IDatabaseObject> void printObjects(List<T> objects) {
+	public <T extends IDatabaseObject> void printObjects(List<T> objects) throws SQLException {
 		for (T object : objects) {
 			object.print();
 		}

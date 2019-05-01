@@ -3,29 +3,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ScrumMember implements IDatabaseObject {
-	private int scrumId;
-	private int employeeId;
-	
-	ScrumMember(int scrumId, int employeeId) {
+    private int scrumId;
+    private int employeeId;
+
+    ScrumMember(int scrumId, int employeeId) {
         this.scrumId = scrumId;
         this.employeeId = employeeId;
     }
-	
-	ScrumMember(ResultSet result) throws SQLException {
-		this(result.getInt(1), result.getInt(2));
-	}
-	
-	@Override
-	public void print() {
-		System.out.println(this.scrumId + " \t" + this.employeeId);
-	}
 
-	@Override
-	public String getTitle() {
-		return null;
-	}
+    ScrumMember(ResultSet result) throws SQLException {
+        this(result.getInt(1), result.getInt(2));
+    }
 
-	@Override
+    @Override
+    public void print() throws SQLException {
+        System.out.println(this.scrumId + " \t" + this.employeeId);
+    }
+
+    @Override
+    public String getTitle() throws SQLException {
+        return null;
+    }
+
+    @Override
     public void insert(Database db) throws SQLException {
         String query = "INSERT INTO ScrumMember (scrumId, employeeId) VALUES (?, ?)";
         PreparedStatement ps = db.con.prepareStatement(query);

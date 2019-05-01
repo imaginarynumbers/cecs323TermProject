@@ -4,28 +4,30 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class SprintBacklog implements IDatabaseObject {
+    Database db;
     int employeeId;
     int sprintId;
     int storyId;
 
-    SprintBacklog(int employeeId, int sprintId, int storyId) {
+    SprintBacklog(Database db, int employeeId, int sprintId, int storyId) {
+        this.db = db;
         this.employeeId = employeeId;
         this.sprintId = sprintId;
         this.storyId = storyId;
 
     }
 
-    SprintBacklog(ResultSet rs) throws SQLException {
-        this(rs.getInt(1), rs.getInt(2), rs.getInt(3));
+    SprintBacklog(Database db, ResultSet rs) throws SQLException {
+        this(db, rs.getInt(1), rs.getInt(2), rs.getInt(3));
     }
 
     @Override
-    public void print() {
+    public void print() throws SQLException {
         System.out.println("To be implemented");
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle() throws SQLException {
         return "To be implemented";
     }
 

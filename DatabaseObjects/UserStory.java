@@ -33,13 +33,13 @@ public class UserStory implements IDatabaseObject {
     }
 
     @Override
-    public void print() {
+    public void print() throws SQLException {
         System.out.println("As " + this.userAs + " I want to " + this.wantTo + " because " + this.because
                 + ". priority:" + this.priority + "\t" + this.creationDate);
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle() throws SQLException {
         return "As " + this.userAs + " I want to " + this.wantTo + " because " + this.because;
     }
 
