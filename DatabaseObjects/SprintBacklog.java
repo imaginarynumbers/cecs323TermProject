@@ -28,26 +28,17 @@ public class SprintBacklog extends DatabaseObject {
 
     @Override
     public String getTitle() throws SQLException {
-        String query = "SELECT UserStory.priority, Employee.fname, Employee.lname,\n"
-                + "UserStory.userAs, UserStory.wantTo, UserStory.because, UserStory.userStatus\n"
-                + "FROM SprintBacklog\n" + "NATURAL JOIN Employee,Sprint,UserStory\n"
-                + "WHERE (UserStory.storyId=(?) AND Sprint.sprintId=(?) AND Employee.employeeId=(?))\n"
-                + "ORDER BY UserStory.priority;";
-        PreparedStatement ps = this.db.con.prepareStatement(query);
-        ps.setInt(1, this.storyId);
-        ps.setInt(2, this.sprintId);
-        ps.setInt(3, this.employeeId);
-        ResultSet res = ps.executeQuery();
+        UserStory us = this.getUserStory();
+        Employee emp = this.getEmployee();
         StringBuilder sb = new StringBuilder();
-        if (res.next()) {
-            sb.append("Priority: " + res.getInt(1)); // priority
-            sb.append("\tDev: " + res.getString(2)); // fname
-            sb.append(" " + res.getString(3)); // lname
-            sb.append("\tStory: As " + res.getString(4)); // userAs
-            sb.append(" I want to " + res.getString(5)); // wantTo
-            sb.append(" because " + res.getString(6)); // because
-            sb.append(". Status: " + res.getString(7)); // status
-        }
+
+        sb.append("Priority: " + us.priority);
+        sb.append("\tDev: " + emp.fName);
+        sb.append(" " + emp.lName);
+        sb.append("\tStory: As " + us.userAs);
+        sb.append(" I want to " + us.wantTo);
+        sb.append(" because " + us.because);
+        sb.append(". Status: " + us.status);
         return sb.toString();
     }
 
@@ -71,8 +62,8 @@ public class SprintBacklog extends DatabaseObject {
         ps.execute();
     }
 
-    public Employee getEmployee() throws SQLException {
-        String query = "SELECT DISTINCT Employee.* FROM SprintBacklog NATURAL JOIN Employee,Sprint,UserStory"
+    private ResultSet getObject(String tableName) throws SQLException {
+        String query = "SELECT DISTINCT " + tableName + ".* FROM SprintBacklog NATURAL JOIN Employee,Sprint,UserStory"
                 + " WHERE (UserStory.storyId=(?) AND Sprint.sprintId=(?) AND Employee.employeeId=(?))"
                 + " ORDER BY UserStory.priority;";
         PreparedStatement ps = this.db.con.prepareStatement(query);
@@ -80,10 +71,37 @@ public class SprintBacklog extends DatabaseObject {
         ps.setInt(2, this.sprintId);
         ps.setInt(3, this.employeeId);
         ResultSet res = ps.executeQuery();
+        return res;
+    }
+
+    public Employee getEmployee() throws SQLException {
+        ResultSet res = this.getObject("Employee");
         Employee result = null;
 
         if (res.next()) {
             result = new Employee(this.db, res);
+        }
+        res.close();
+        return result;
+    }
+
+    public Sprint getSprint() throws SQLException {
+        ResultSet res = this.getObject("Sprint");
+        Sprint result = null;
+
+        if (res.next()) {
+            result = new Sprint(this.db, res);
+        }
+        res.close();
+        return result;
+    }
+
+    public UserStory getUserStory() throws SQLException {
+        ResultSet res = this.getObject("UserStory");
+        UserStory result = null;
+
+        if (res.next()) {
+            result = new UserStory(this.db, res);
         }
         res.close();
         return result;
