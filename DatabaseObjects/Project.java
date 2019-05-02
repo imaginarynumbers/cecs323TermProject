@@ -35,9 +35,11 @@ public class Project extends DatabaseObject {
 		ps.setString(2, this.description);
 		ps.execute();
 		ResultSet keys = ps.getGeneratedKeys();
-		if (keys.next())
+		if (keys.next()) {
 			this.projectId = keys.getInt(1);
-		else
+			ScrumTeam team = new ScrumTeam(this.db, 0, this.projectId);
+			team.insert();
+		} else
 			System.err.println("Did not get generated key: " + query);
 	}
 
@@ -108,6 +110,27 @@ public class Project extends DatabaseObject {
 				result.add(buff);
 		}
 		res.close();
+		return result;
+	}
+
+	ScrumTeam getScrumTeam() throws SQLException {
+		String query = "SELECT * FROM ScrumTeam WHERE projectId = (?)";
+		PreparedStatement ps = this.db.con.prepareStatement(query);
+		ps.setInt(1, projectId);
+		ResultSet res = ps.executeQuery();
+		ScrumTeam result = null;
+
+		if (res.next()) {
+			result = new ScrumTeam(this.db, res);
+		}
+		res.close();
+		if (result == null) {
+			// It sucks to do that for concurrency issues
+			// But since some of the Projects have been created without a team
+			// It is one easy way to generate the teams
+			result = new ScrumTeam(this.db, 0, this.projectId);
+			result.insert();
+		}
 		return result;
 	}
 }
