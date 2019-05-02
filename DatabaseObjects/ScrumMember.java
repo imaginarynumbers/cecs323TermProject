@@ -48,7 +48,7 @@ public class ScrumMember extends DatabaseObject {
         String query = "SELECT Employee.* FROM ScrumMember NATURAL JOIN Employee WHERE (Employee.employeeId=(?));";
         Employee result = null;
         PreparedStatement ps = this.db.con.prepareStatement(query);
-        ps.setInt(3, this.employeeId);
+        ps.setInt(1, this.employeeId);
         ResultSet res = ps.executeQuery();
         if (res.next()) {
             result = new Employee(this.db, res);
