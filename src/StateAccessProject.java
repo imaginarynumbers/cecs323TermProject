@@ -1,5 +1,3 @@
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,7 +16,8 @@ public class StateAccessProject extends State {
 	}
 
 	void insertUserStory() throws SQLException {
-		String pattern = "yyyy-MM-dd";
+		String[] menuChoices = {"To-Do", "Build-and-document", "Testing", "Completed, (i.e. passed testing)"};
+                String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
 
@@ -26,7 +25,25 @@ public class StateAccessProject extends State {
 		String wantTo = this.scan.raw_input("I want to : ");
 		String because = this.scan.raw_input("Because: ");
 		int priority = Integer.parseInt(this.scan.raw_input("Priority (int): "));
-		String status = this.scan.raw_input("Status: "); // Should be an enum here
+                String status = "";
+                int result = this.scan.showOptions("Status: " + this.project.title, menuChoices);
+		switch (result) {
+		case 1:
+                       status = "To-Do"; 
+                       break;
+		case 2:
+                       status = "Document";  
+                       break;
+		case 3:
+			status = "Testing";
+                        break;
+		case 4:
+			status = "Completed";
+			break;
+		default:
+			System.out.println("Invalid input");
+                        return;
+		}
 		UserStory us = new UserStory(this.db, 0, as, wantTo, because, priority, status, date, this.project.projectId);
 		us.insert();
 	}
@@ -69,8 +86,9 @@ public class StateAccessProject extends State {
 
 		case 5:
 			Sprint sprint = this.scan.<Sprint>select(this.project.getSprints());
-			return new StateAccessSprint(this.project, sprint);
-
+                        if (sprint != null)
+                            return new StateAccessSprint(this.project, sprint);
+                        break;
 		case 6:
 			this.project.printUserStories();
 			break;

@@ -68,7 +68,7 @@ public class Project extends DatabaseObject {
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();
-		List<Sprint> result = new ArrayList<>();
+		List<Sprint> result = new ArrayList<Sprint>();
 
 		while (res.next()) {
 			result.add(new Sprint(this.db, res));
@@ -82,7 +82,7 @@ public class Project extends DatabaseObject {
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();
-		List<UserStory> result = new ArrayList<>();
+		List<UserStory> result = new ArrayList<UserStory>();
 
 		while (res.next()) {
 			result.add(new UserStory(this.db, res));
