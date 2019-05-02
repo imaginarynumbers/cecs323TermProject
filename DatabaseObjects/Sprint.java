@@ -74,6 +74,15 @@ public class Sprint extends DatabaseObject {
         return result;
     }
 
+    List<UserStory> getUserStories() throws SQLException {
+        List<UserStory> result = new ArrayList<UserStory>();
+        List<SprintBacklog> backlogs = this.getBacklogs();
+        for (SprintBacklog backlog : backlogs) {
+            result.add(backlog.getUserStory());
+        }
+        return result;
+    }
+
     List<Employee> getEmployees() throws SQLException {
         List<SprintBacklog> backlogs = this.getBacklogs();
         List<Employee> result = new ArrayList<Employee>();

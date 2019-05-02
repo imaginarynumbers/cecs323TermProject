@@ -38,10 +38,10 @@ public class StateAccessSprint extends State {
     }
 
     void updateBacklogStatus() throws SQLException {
-        UserStory us = this.scan.<UserStory>select(this.project.getUserStories());
+        UserStory us = this.scan.<UserStory>select(this.sprint.getUserStories());
         if (us == null)
             return;
-        // TODO UPDATE HERE
+        us.updateUserStory(this.scan.getUserStoryStatus());
     }
 
     StateAccessSprint(Project project, Sprint sprint) {
