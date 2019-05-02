@@ -33,13 +33,13 @@ public class UserStory extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println("Priority: " + this.priority + "\t" + this.creationDate + " As " + this.userAs
-                + " I want to " + this.wantTo + " because " + this.because);
+        System.out.println(this.getTitle());
     }
 
     @Override
     public String getTitle() throws SQLException {
-        return "As " + this.userAs + " I want to " + this.wantTo + " because " + this.because;
+        return "Priority: " +  this.priority + "\tStatus: " + this.status + "\t" + this.creationDate + " As " + this.userAs
+                + " I want to " + this.wantTo + " because " + this.because;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class UserStory extends DatabaseObject {
 
     @Override
     public void delete() throws SQLException {
-        String query = "DELETE FROM UserStory wher storyId = (?)";
+        String query = "DELETE FROM UserStory WHERE storyId = (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.storyId);
         ps.execute();

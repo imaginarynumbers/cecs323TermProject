@@ -68,7 +68,7 @@ public class Project extends DatabaseObject {
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();
-		List<Sprint> result = new ArrayList<>();
+		List<Sprint> result = new ArrayList<Sprint>();
 
 		while (res.next()) {
 			result.add(new Sprint(this.db, res));
@@ -77,15 +77,35 @@ public class Project extends DatabaseObject {
 		return result;
 	}
 
+	List<SprintBacklog> getSprintBacklogs() throws SQLException {
+		List<Sprint> sprints = this.getSprints();
+		List<SprintBacklog> backlogs = new ArrayList<SprintBacklog>();
+
+		for (Sprint sprint : sprints) {
+			backlogs.addAll(sprint.getBacklogs());
+		}
+		return backlogs;
+	}
+
 	List<UserStory> getUserStories() throws SQLException {
 		String query = "SELECT * FROM UserStory WHERE projectId = (?)";
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();
-		List<UserStory> result = new ArrayList<>();
+		List<UserStory> result = new ArrayList<UserStory>();
+		List<SprintBacklog> backlogs = this.getSprintBacklogs();
+		UserStory buff = null;
+		boolean isInBacklog = false;
 
 		while (res.next()) {
-			result.add(new UserStory(this.db, res));
+			buff = new UserStory(this.db, res);
+			isInBacklog = false;
+			for (SprintBacklog backlog : backlogs) {
+				if (backlog.storyId == buff.storyId)
+					isInBacklog = true;
+			}
+			if (!isInBacklog)
+				result.add(buff);
 		}
 		res.close();
 		return result;

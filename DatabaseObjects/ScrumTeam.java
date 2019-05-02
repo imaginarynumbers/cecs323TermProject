@@ -3,6 +3,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ScrumTeam extends DatabaseObject {
     private int scrumId;
@@ -46,5 +48,31 @@ public class ScrumTeam extends DatabaseObject {
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.scrumId);
         ps.execute();
+    }
+
+    Project getProject() throws SQLException {
+        String query = "SELECT * FROM Project WHERE projectId=(?);";
+        Project result = null;
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, this.projectId);
+        ResultSet res = ps.executeQuery();
+        if (res.next()) {
+            result = new Project(this.db, res);
+        }
+        return result;
+    }
+
+    List<ScrumMember> getMembers() throws SQLException {
+        String query = "SELECT * FROM ScrumMember WHERE scrumId = (?)";
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, scrumId);
+        ResultSet res = ps.executeQuery();
+        List<ScrumMember> result = new ArrayList<ScrumMember>();
+
+        while (res.next()) {
+            result.add(new ScrumMember(this.db, res));
+        }
+        res.close();
+        return result;
     }
 }

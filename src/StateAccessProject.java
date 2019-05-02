@@ -18,6 +18,7 @@ public class StateAccessProject extends State {
 	}
 
 	void insertUserStory() throws SQLException {
+		String[] menuChoices = { "To-Do", "Build-and-document", "Testing", "Completed, (i.e. passed testing)" };
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
@@ -26,7 +27,25 @@ public class StateAccessProject extends State {
 		String wantTo = this.scan.raw_input("I want to : ");
 		String because = this.scan.raw_input("Because: ");
 		int priority = Integer.parseInt(this.scan.raw_input("Priority (int): "));
-		String status = this.scan.raw_input("Status: "); // Should be an enum here
+		String status = "";
+		int result = this.scan.showOptions("Status: " + this.project.title, menuChoices);
+		switch (result) {
+		case 1:
+			status = "To-Do";
+			break;
+		case 2:
+			status = "Document";
+			break;
+		case 3:
+			status = "Testing";
+			break;
+		case 4:
+			status = "Completed";
+			break;
+		default:
+			System.out.println("Invalid input");
+			return;
+		}
 		UserStory us = new UserStory(this.db, 0, as, wantTo, because, priority, status, date, this.project.projectId);
 		us.insert();
 	}
@@ -42,10 +61,24 @@ public class StateAccessProject extends State {
 
 	}
 
+	void viewDevelopers() throws SQLException {
+		String query = "select " + "    Employee.* " + "from Project "
+				+ "inner join ScrumTeam ST on Project.projectId = ST.projectId "
+				+ "inner join ScrumMember SM on ST.scrumId = SM.scrumId "
+				+ "inner join Employee on Employee.employeeId = SM.employeeId " + "WHERE  Project.projectID = (?)";
+		PreparedStatement ps = this.db.con.prepareStatement(query);
+		ps.setInt(1, this.project.projectId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Employee emp = new Employee(this.db, rs);
+			emp.print();
+		}
+	}
+
 	@Override
 	State update() throws SQLException {
 		String[] options = { "Delete project", "Create Sprint", "Create UserStory", "View Sprints", "Access Sprint",
-				"View project backlog", "Return to main" };
+				"View project backlog", "View developers assigned to project", "Return to main" };
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
 		switch (rep) {
 		case 1:
@@ -69,10 +102,15 @@ public class StateAccessProject extends State {
 
 		case 5:
 			Sprint sprint = this.scan.<Sprint>select(this.project.getSprints());
-			return new StateAccessSprint(this.project, sprint);
-
+			if (sprint != null)
+				return new StateAccessSprint(this.project, sprint);
+			break;
 		case 6:
 			this.project.printUserStories();
+			break;
+
+		case 7:
+			this.viewDevelopers();
 			break;
 
 		default:

@@ -18,12 +18,13 @@ public class ScrumMember extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println(this.scrumId + " \t" + this.employeeId);
+        System.out.println(this.getTitle());
     }
 
     @Override
     public String getTitle() throws SQLException {
-        return null;
+        Employee emp = this.getEmployee();
+        return emp.fName + " " + emp.lName;
     }
 
     @Override
@@ -42,5 +43,17 @@ public class ScrumMember extends DatabaseObject {
         ps.setInt(1, this.scrumId);
         ps.setInt(2, this.employeeId);
         ps.execute();
+    }
+
+    Employee getEmployee() throws SQLException {
+        String query = "SELECT * FROM Employee WHERE employeeId=(?);";
+        Employee result = null;
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, this.employeeId);
+        ResultSet res = ps.executeQuery();
+        if (res.next()) {
+            result = new Employee(this.db, res);
+        }
+        return result;
     }
 }
