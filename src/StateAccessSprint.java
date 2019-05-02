@@ -36,6 +36,8 @@ public class StateAccessSprint extends State {
         this.sprint = sprint;
     }
 
+
+
     @Override
     State update() throws SQLException {
         String[] options = { "Add backlog", "Delete backlog", "List backlogs", "List developers", "Return to project" };
@@ -56,7 +58,7 @@ public class StateAccessSprint extends State {
         case 4:
             this.listDevelopers();
             break;
-
+        
         default:
             return new StateAccessProject(project);
         }

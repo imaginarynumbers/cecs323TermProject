@@ -42,10 +42,27 @@ public class StateAccessProject extends State {
 
 	}
 
+	void viewDevelopers() throws SQLException {
+		String query = "select " +
+				"    Employee.* " +
+				"from Project " +
+				"inner join ScrumTeam ST on Project.projectId = ST.projectId " +
+				"inner join ScrumMember SM on ST.scrumId = SM.scrumId " +
+				"inner join Employee on Employee.employeeId = SM.employeeId " +
+				"WHERE  Project.projectID = (?)";
+		PreparedStatement ps = this.db.con.prepareStatement(query);
+		ps.setInt(1, this.project.projectId);
+		ResultSet rs = ps.executeQuery();
+		while (rs.next()) {
+			Employee emp = new Employee(rs);
+			emp.print();
+		}
+	}
+
 	@Override
 	State update() throws SQLException {
 		String[] options = { "Delete project", "Create Sprint", "Create UserStory", "View Sprints", "Access Sprint",
-				"View project backlog", "Return to main" };
+				"View project backlog", "View developers assigned to project", "Return to main" };
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
 		switch (rep) {
 		case 1:
@@ -73,6 +90,10 @@ public class StateAccessProject extends State {
 
 		case 6:
 			this.project.printUserStories();
+			break;
+
+		case 7:
+			this.viewDevelopers();
 			break;
 
 		default:
