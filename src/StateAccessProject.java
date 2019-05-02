@@ -42,11 +42,11 @@ public class StateAccessProject extends State {
 
 	}
 
-	void viewDevelopers() throws SQLException {
-		String query = "select " + "    Employee.* " + "from Project "
-				+ "inner join ScrumTeam ST on Project.projectId = ST.projectId "
-				+ "inner join ScrumMember SM on ST.scrumId = SM.scrumId "
-				+ "inner join Employee on Employee.employeeId = SM.employeeId " + "WHERE  Project.projectID = (?)";
+	void viewScrumTeam() throws SQLException {
+		String query = "SELECT Employee.* FROM Project "
+				+ " INNER JOIN ScrumTeam ST on Project.projectId = ST.projectId"
+				+ " INNER JOIN ScrumMember SM on ST.scrumId = SM.scrumId"
+				+ " INNER JOIN Employee on Employee.employeeId = SM.employeeId WHERE  Project.projectID = (?)";
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, this.project.projectId);
 		ResultSet rs = ps.executeQuery();
@@ -59,7 +59,7 @@ public class StateAccessProject extends State {
 	@Override
 	State update() throws SQLException {
 		String[] options = { "Delete project", "Create Sprint", "Create UserStory", "View Sprints", "Access Sprint",
-				"View project backlog", "View developers assigned to project", "Return to main" };
+				"View project backlog", "View ScrumTeam", "Return to main" };
 		int rep = this.scan.showOptions("Project " + this.project.title, options);
 		switch (rep) {
 		case 1:
@@ -91,7 +91,7 @@ public class StateAccessProject extends State {
 			break;
 
 		case 7:
-			this.viewDevelopers();
+			this.viewScrumTeam();
 			break;
 
 		default:
