@@ -57,7 +57,7 @@ public class Database {
 		System.out.println("Closed!");
 	}
 
-	public <T extends IDatabaseObject> void printObjects(List<T> objects) {
+	public <T extends DatabaseObject> void printObjects(List<T> objects) throws SQLException {
 		for (T object : objects) {
 			object.print();
 		}
@@ -71,23 +71,13 @@ public class Database {
 		this.<Employee>printObjects(this.getEmployees());
 	}
 
-	void printSprints(int projectId) throws SQLException {
-		System.out.println("SprintID \t ProjectID \t Date \t sprintName");
-		this.<Sprint>printObjects(this.getSprints(projectId));
-	}
-
-	void printUserStories(int projectId) throws SQLException {
-		System.out.println("As \tI want to\t Priority\tCreation date");
-		this.<UserStory>printObjects(this.getUserStories(projectId));
-	}
-
 	List<Employee> getEmployees() throws SQLException {
 		String query = "SELECT * FROM Employee";
 		ResultSet result = this.state.executeQuery(query);
 		List<Employee> res = new ArrayList<>();
 
 		while (result.next()) {
-			res.add(new Employee(result));
+			res.add(new Employee(this, result));
 		}
 		result.close();
 		return res;
@@ -99,37 +89,10 @@ public class Database {
 		List<Project> res = new ArrayList<>();
 
 		while (result.next()) {
-			res.add(new Project(result));
+			res.add(new Project(this, result));
 		}
 		result.close();
 		return res;
 	}
 
-	List<Sprint> getSprints(int projectId) throws SQLException {
-		String query = "SELECT * FROM Sprint WHERE projectID = (?)";
-		PreparedStatement ps = this.con.prepareStatement(query);
-		ps.setInt(1, projectId);
-		ResultSet res = ps.executeQuery();
-		List<Sprint> result = new ArrayList<>();
-
-		while (res.next()) {
-			result.add(new Sprint(res));
-		}
-		res.close();
-		return result;
-	}
-
-	List<UserStory> getUserStories(int projectId) throws SQLException {
-		String query = "SELECT * FROM UserStory WHERE projectID = (?)";
-		PreparedStatement ps = this.con.prepareStatement(query);
-		ps.setInt(1, projectId);
-		ResultSet res = ps.executeQuery();
-		List<UserStory> result = new ArrayList<>();
-
-		while (res.next()) {
-			result.add(new UserStory(res));
-		}
-		res.close();
-		return result;
-	}
 }

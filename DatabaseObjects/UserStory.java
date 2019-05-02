@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class UserStory implements IDatabaseObject {
+public class UserStory extends DatabaseObject {
     int storyId;
     String userAs;
     String wantTo;
@@ -15,8 +15,9 @@ public class UserStory implements IDatabaseObject {
     String creationDate;
     int projectId;
 
-    UserStory(int storyId, String userAs, String wantTo, String because, int priority, String status,
+    UserStory(Database db, int storyId, String userAs, String wantTo, String because, int priority, String status,
             String creationDate, int projectId) {
+        super(db);
         this.storyId = storyId;
         this.userAs = userAs;
         this.wantTo = wantTo;
@@ -27,24 +28,24 @@ public class UserStory implements IDatabaseObject {
         this.projectId = projectId;
     }
 
-    UserStory(ResultSet rs) throws SQLException {
-        this(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
+    UserStory(Database db, ResultSet rs) throws SQLException {
+        this(db, rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getInt(5), rs.getString(6),
                 rs.getString(7), rs.getInt(8));
     }
 
     @Override
-    public void print() {
-        System.out.println("As " + this.userAs + " I want to " + this.wantTo + " because " + this.because
-                + ". priority:" + this.priority + "\t" + this.creationDate);
+    public void print() throws SQLException {
+        System.out.println("Priority: " + this.priority + "\t" + this.creationDate + " As " + this.userAs
+                + " I want to " + this.wantTo + " because " + this.because);
     }
 
     @Override
-    public String getTitle() {
+    public String getTitle() throws SQLException {
         return "As " + this.userAs + " I want to " + this.wantTo + " because " + this.because;
     }
 
     @Override
-    public void insert(Database db) throws SQLException {
+    public void insert() throws SQLException {
         String query = "insert into UserStory " + "(userAs, wantTo, because, priority, "
                 + "userStatus, creationDate, projectId) " + "VALUES (?, ?, ?, ?, ?, ?, ?) ";
         PreparedStatement ps = db.con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -64,8 +65,8 @@ public class UserStory implements IDatabaseObject {
     }
 
     @Override
-    public void delete(Database db) throws SQLException {
-        String query = "DELETE FROM UserStory wher storyId = (?)";
+    public void delete() throws SQLException {
+        String query = "DELETE FROM UserStory WHERE storyId = (?)";
         PreparedStatement ps = db.con.prepareStatement(query);
         ps.setInt(1, this.storyId);
         ps.execute();
