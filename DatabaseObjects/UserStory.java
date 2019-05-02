@@ -71,4 +71,12 @@ public class UserStory extends DatabaseObject {
         ps.setInt(1, this.storyId);
         ps.execute();
     }
+
+    public void updateStatus() throws SQLException {
+        String[] status_options = {"To-do", "Build-and-document", "Testing", "Completed, passed testing"};
+
+        String query = "UPDATE UserStory SET userStatus = (?) WHERE storyId = (?)";
+    }
+
+
 }
