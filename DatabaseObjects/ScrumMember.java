@@ -18,12 +18,13 @@ public class ScrumMember extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println(this.scrumId + " \t" + this.employeeId);
+        System.out.println(this.getTitle());
     }
 
     @Override
     public String getTitle() throws SQLException {
-        return null;
+        Employee emp = this.getEmployee();
+        return emp.fName + " " + emp.lName;
     }
 
     @Override

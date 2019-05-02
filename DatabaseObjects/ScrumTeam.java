@@ -47,4 +47,16 @@ public class ScrumTeam extends DatabaseObject {
         ps.setInt(1, this.scrumId);
         ps.execute();
     }
+
+    Project getProject() throws SQLException {
+        String query = "SELECT * FROM Project WHERE projectId=(?);";
+        Project result = null;
+        PreparedStatement ps = this.db.con.prepareStatement(query);
+        ps.setInt(1, this.projectId);
+        ResultSet res = ps.executeQuery();
+        if (res.next()) {
+            result = new Project(this.db, res);
+        }
+        return result;
+    }
 }
