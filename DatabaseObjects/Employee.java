@@ -23,7 +23,7 @@ public class Employee extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println(this.employeeId + "\t" + this.fName + "\t" + this.lName + "\t" + this.jobTitle);
+        System.out.println(this.fName + "\t" + this.lName + "\t" + this.jobTitle);
     }
 
     @Override

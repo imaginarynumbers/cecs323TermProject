@@ -3,6 +3,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 public class StateAccessProject extends State {
 
@@ -43,16 +44,10 @@ public class StateAccessProject extends State {
 	}
 
 	void viewScrumTeam() throws SQLException {
-		String query = "SELECT Employee.* FROM Project "
-				+ " INNER JOIN ScrumTeam ST on Project.projectId = ST.projectId"
-				+ " INNER JOIN ScrumMember SM on ST.scrumId = SM.scrumId"
-				+ " INNER JOIN Employee on Employee.employeeId = SM.employeeId WHERE  Project.projectID = (?)";
-		PreparedStatement ps = this.db.con.prepareStatement(query);
-		ps.setInt(1, this.project.projectId);
-		ResultSet rs = ps.executeQuery();
-		while (rs.next()) {
-			Employee emp = new Employee(this.db, rs);
-			emp.print();
+		ScrumTeam team = this.project.getScrumTeam();
+		List<ScrumMember> members = team.getMembers();
+		for (ScrumMember member : members) {
+			member.getEmployee().print();
 		}
 	}
 
