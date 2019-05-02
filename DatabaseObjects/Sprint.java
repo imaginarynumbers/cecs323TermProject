@@ -65,7 +65,7 @@ public class Sprint extends DatabaseObject {
         PreparedStatement ps = this.db.con.prepareStatement(query);
         ps.setInt(1, sprintId);
         ResultSet res = ps.executeQuery();
-        List<SprintBacklog> result = new ArrayList<>();
+        List<SprintBacklog> result = new ArrayList<SprintBacklog>();
 
         while (res.next()) {
             result.add(new SprintBacklog(this.db, res));
@@ -76,7 +76,7 @@ public class Sprint extends DatabaseObject {
 
     List<Employee> getEmployees() throws SQLException {
         List<SprintBacklog> backlogs = this.getBacklogs();
-        List<Employee> result = new ArrayList<>();
+        List<Employee> result = new ArrayList<Employee>();
         Employee buff = null;
         boolean found = false;
         for (SprintBacklog backlog : backlogs) {
