@@ -12,13 +12,19 @@ public class StateAccessSprint extends State {
 
     void addBacklog() throws SQLException {
         UserStory us = this.scan.<UserStory>select(this.project.getUserStories());
+        if (us == null)
+            return;
         Employee emp = this.scan.<Employee>select(this.db.getEmployees());
+        if (emp == null)
+            return;
         SprintBacklog bl = new SprintBacklog(this.db, emp.employeeId, this.sprint.sprintId, us.storyId);
         bl.insert();
     }
 
     void deleteBacklog() throws SQLException {
         SprintBacklog backlog = this.scan.<SprintBacklog>select(this.sprint.getBacklogs());
+        if (backlog == null)
+            return;
         String rep = this.scan.raw_input("Are you sure you want to remove: " + backlog.getTitle() + "\n(y/n): ");
         if (rep.toLowerCase().equals("y"))
             backlog.delete();
@@ -31,16 +37,22 @@ public class StateAccessSprint extends State {
         }
     }
 
+    void updateBacklogStatus() throws SQLException {
+        UserStory us = this.scan.<UserStory>select(this.project.getUserStories());
+        if (us == null)
+            return;
+        // TODO UPDATE HERE
+    }
+
     StateAccessSprint(Project project, Sprint sprint) {
         this.project = project;
         this.sprint = sprint;
     }
 
-
-
     @Override
     State update() throws SQLException {
-        String[] options = { "Add backlog", "Delete backlog", "List backlogs", "List developers", "Return to project" };
+        String[] options = { "Add backlog", "Delete backlog", "List backlogs", "List developers",
+                "Update backlog status", "Return to project" };
         int rep = this.scan.showOptions("Sprint " + this.sprint.name, options);
         switch (rep) {
         case 1:
@@ -58,7 +70,11 @@ public class StateAccessSprint extends State {
         case 4:
             this.listDevelopers();
             break;
-        
+
+        case 5:
+            this.updateBacklogStatus();
+            break;
+
         default:
             return new StateAccessProject(project);
         }

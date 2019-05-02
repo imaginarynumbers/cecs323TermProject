@@ -35,13 +35,13 @@ public class UserStory extends DatabaseObject {
 
     @Override
     public void print() throws SQLException {
-        System.out.println("Priority: " + this.priority + "\t" + this.creationDate + " As " + this.userAs
-                + " I want to " + this.wantTo + " because " + this.because);
+        System.out.println(this.getTitle());
     }
 
     @Override
     public String getTitle() throws SQLException {
-        return "As " + this.userAs + " I want to " + this.wantTo + " because " + this.because;
+        return "Priority: " +  this.priority + "\tStatus: " + this.status + "\t" + this.creationDate + " As " + this.userAs
+                + " I want to " + this.wantTo + " because " + this.because;
     }
 
     @Override

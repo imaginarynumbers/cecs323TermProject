@@ -74,7 +74,7 @@ public class Database {
 	List<Employee> getEmployees() throws SQLException {
 		String query = "SELECT * FROM Employee";
 		ResultSet result = this.state.executeQuery(query);
-		List<Employee> res = new ArrayList<>();
+		List<Employee> res = new ArrayList<Employee>();
 
 		while (result.next()) {
 			res.add(new Employee(this, result));
@@ -86,7 +86,7 @@ public class Database {
 	List<Project> getProjects() throws SQLException {
 		String query = "SELECT * FROM Project;";
 		ResultSet result = this.state.executeQuery(query);
-		List<Project> res = new ArrayList<>();
+		List<Project> res = new ArrayList<Project>();
 
 		while (result.next()) {
 			res.add(new Project(this, result));
