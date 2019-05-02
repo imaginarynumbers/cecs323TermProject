@@ -68,4 +68,28 @@ public class MyScanner {
 		}
 	}
 
+	public String getUserStoryStatus() {
+		String status;
+		String[] menuChoices = { "To-Do", "Build-and-document", "Testing", "Completed, (i.e. passed testing)" };
+		int result = this.showOptions("Enter UserStory status:", menuChoices);
+		switch (result) {
+		case 1:
+			status = "To-Do";
+			break;
+		case 2:
+			status = "Document";
+			break;
+		case 3:
+			status = "Testing";
+			break;
+		case 4:
+			status = "Completed";
+			break;
+		default:
+			System.out.println("Invalid input");
+			return null;
+		}
+		return status;
+	}
+
 }

@@ -18,7 +18,6 @@ public class StateAccessProject extends State {
 	}
 
 	void insertUserStory() throws SQLException {
-		String[] menuChoices = { "To-Do", "Build-and-document", "Testing", "Completed, (i.e. passed testing)" };
 		String pattern = "yyyy-MM-dd";
 		SimpleDateFormat simpleDateFormat = new SimpleDateFormat(pattern);
 		String date = simpleDateFormat.format(new Date());
@@ -27,25 +26,7 @@ public class StateAccessProject extends State {
 		String wantTo = this.scan.raw_input("I want to : ");
 		String because = this.scan.raw_input("Because: ");
 		int priority = Integer.parseInt(this.scan.raw_input("Priority (int): "));
-		String status = "";
-		int result = this.scan.showOptions("Status: " + this.project.title, menuChoices);
-		switch (result) {
-		case 1:
-			status = "To-Do";
-			break;
-		case 2:
-			status = "Document";
-			break;
-		case 3:
-			status = "Testing";
-			break;
-		case 4:
-			status = "Completed";
-			break;
-		default:
-			System.out.println("Invalid input");
-			return;
-		}
+		String status = this.scan.getUserStoryStatus();
 		UserStory us = new UserStory(this.db, 0, as, wantTo, because, priority, status, date, this.project.projectId);
 		us.insert();
 	}
