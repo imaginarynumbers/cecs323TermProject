@@ -71,4 +71,14 @@ public class UserStory extends DatabaseObject {
         ps.setInt(1, this.storyId);
         ps.execute();
     }
+
+    public void updateUserStory(String status) throws SQLException {
+        String query = "UPDATE UserStory SET userStatus = (?) WHERE storyId = (?)";
+        PreparedStatement ps = db.con.prepareStatement(query);
+        ps.setString(1, status);
+        this.status = status;
+        ps.setInt(2, this.storyId);
+        ps.execute();
+    }
+
 }
