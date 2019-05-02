@@ -45,7 +45,7 @@ public class ScrumMember extends DatabaseObject {
     }
 
     Employee getEmployee() throws SQLException {
-        String query = "SELECT Employee.* FROM ScrumMember NATURAL JOIN Employee WHERE (Employee.employeeId=(?));";
+        String query = "SELECT * FROM Employee WHERE employeeId=(?);";
         Employee result = null;
         PreparedStatement ps = this.db.con.prepareStatement(query);
         ps.setInt(1, this.employeeId);
