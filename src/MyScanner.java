@@ -1,3 +1,4 @@
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -47,7 +48,7 @@ public class MyScanner {
 		}
 	}
 
-	public <T extends IDatabaseObject> T select(List<T> objects) {
+	public <T extends DatabaseObject> T select(List<T> objects) throws SQLException {
 		String[] options = new String[objects.size() + 1];
 		int x = 0;
 		if (objects.size() <= 0) {
