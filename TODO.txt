@@ -14,4 +14,7 @@ Project.getUserStories should exclude user stories which already are in a sprint
 
 ------------
 
+check null this.scan.select
 
+------
+view user stories from project
