@@ -78,7 +78,7 @@ public class Project extends DatabaseObject {
 	}
 
 	List<UserStory> getUserStories() throws SQLException {
-		String query = "SELECT * FROM UserStory WHERE projectId = (?)";
+		String query = "SELECT * FROM UserStory EXCEPT SELECT * FROM Sprint WHERE projectId = (?)";
 		PreparedStatement ps = this.db.con.prepareStatement(query);
 		ps.setInt(1, projectId);
 		ResultSet res = ps.executeQuery();
